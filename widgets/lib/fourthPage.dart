@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgets/gridview.dart';
 
 class FourthPage extends StatelessWidget {
   const FourthPage({Key key}) : super(key: key);
@@ -14,9 +15,19 @@ class FourthPage extends StatelessWidget {
           padding: EdgeInsets.all(10.0),
           itemCount: 5,
           itemBuilder: (context, int index) {
-            return Container(
-              padding: EdgeInsets.all(10.0),
-              child: Text('ListViewBuilder${(index + 1).toString()}'),
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return GridViewPage();
+                  }),
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.all(10.0),
+                child: Text('ListViewBuilder${(index + 1).toString()}'),
+              ),
             );
           },
         ),
