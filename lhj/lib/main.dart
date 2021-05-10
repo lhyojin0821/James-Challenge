@@ -99,7 +99,7 @@ class MainPage extends StatelessWidget {
         title: Text('LOGO'),
         // 안드로이드 가운데 정렬
         // centerTitle: true,// Color
-        leading: Icon(Icons.http),
+        leading: Icon(Icons.menu),
         actions: [
           IconButton(
             icon: new Icon(Icons.settings),

@@ -20,76 +20,67 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       appBar: _appBar(),
       body: GridView.builder(
-          padding: EdgeInsets.all(10.0),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
-          ),
-          // children: [
-          //   _gridTile(imgUrl: data[0]['imgUrl'], name: data[0]['name']),
-          //   _gridTile(imgUrl: data[1]['imgUrl'], name: data[1]['name']),
-          //   _gridTile(imgUrl: data[2]['imgUrl'], name: data[2]['name']),
-          // ],
-          // children: _makeWidgets(this.data),
-          itemCount: this.data.length,
-          itemBuilder: (BuildContext context, int i) {
-            return _gridTile(
-                imgUrl: this.data[i]['imgUrl'], name: this.data[i]['name']);
-          }),
+        padding: EdgeInsets.all(10),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 10.0,
+        ),
+        // children: [
+        //   _gridTile(
+        //     imgUrl: this.data[0]['imgUrl'],
+        //     name: this.data[0]['name'],
+        //   ),
+        //   _gridTile(
+        //     imgUrl: this.data[1]['imgUrl'],
+        //     name: this.data[1]['name'],
+        //   ),
+        //   _gridTile(
+        //     imgUrl: this.data[2]['imgUrl'],
+        //     name: this.data[2]['name'],
+        //   ),
+        // ],
+        // children: _makeWidgets(this.data),
+        itemCount: this.data.length,
+        itemBuilder: (BuildContext context, int i) {
+          return _gridTile(
+              imgUrl: this.data[i]['imgUrl'], name: this.data[i]['name']);
+        },
+      ),
     );
+  }
+
+  List<Widget> _makeWidgets(List<Map<String, String>> dataList) {
+    // return dataList.map((Map<String, String> e) {
+    //   return _gridTile(imgUrl: e['imgUrl'], name: e['name']);
+    // }).toList();
+    // List<Widget> newWidgets = [];
+    // for (int i = 0; i < dataList.length; i++) {
+    //   newWidgets.add(
+    //       _gridTile(imgUrl: dataList[i]['imgUrl'], name: dataList[i]['name']));
+    // }
+    // return newWidgets;
   }
 
   List<Map<String, String>> data = [
     {
       'imgUrl':
-          'https://s3.ap-south-1.amazonaws.com/www.kreately.in/wp-content/uploads/2020/11/29215616/3-1-6.jpg',
+          'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDN8fG11c2ljfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'EDM'
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1421217336522-861978fdf33a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fG11c2ljfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG11c2ljfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'POP'
     },
     {
       'imgUrl':
-          'https://i1.sndcdn.com/artworks-000453440922-qo4j1g-t500x500.jpg',
-      'name': 'HIP HOP'
+          'https://images.unsplash.com/photo-1504898770365-14faca6a7320?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzB8fG11c2ljfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': 'HiP HOP'
     },
   ];
 
-  // List<Widget> _makeWidgets(List<Map<String, String>> dataList) {
-  //   List<Widget> newWidgets = [];
-  //   for (int i = 0; i < dataList.length; i++) {
-  //     newWidgets.add(
-  //         _gridTile(imgUrl: dataList[i]['imgUrl'], name: dataList[i]['name']));
-  //   }
-  //   return newWidgets;
-  // }
-  //   return dataList.map<Widget>((Map<String, String> e) {
-  //     return _gridTile(imgUrl: e['imgUrl'], name: e['name']);
-  //   }).toList();
-  // }
-
-  PreferredSizeWidget _appBar() {
-    return AppBar(
-      backgroundColor: Colors.green,
-      title: Text('LOGO'),
-      leading: Icon(Icons.menu),
-      actions: [
-        IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              return;
-            }),
-      ],
-    );
-  }
-
-  Widget _gridTile({
-    @required String imgUrl,
-    @required String name,
-  }) {
+  Widget _gridTile({@required String imgUrl, @required String name}) {
     return Container(
       color: Colors.green,
       child: Column(
@@ -105,8 +96,8 @@ class MainPage extends StatelessWidget {
             width: 60.0,
             height: 60.0,
             decoration: BoxDecoration(
-                color: Colors.blue,
                 borderRadius: BorderRadius.circular(60.0),
+                color: Colors.yellow,
                 image: DecorationImage(
                     fit: BoxFit.cover, image: NetworkImage(imgUrl))),
           ),
@@ -114,8 +105,8 @@ class MainPage extends StatelessWidget {
             child: Text(
               name,
               style: TextStyle(
-                fontSize: 16.0,
                 fontWeight: FontWeight.bold,
+                fontSize: 16.0,
               ),
             ),
           ),
@@ -131,6 +122,21 @@ class MainPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  PreferredSizeWidget _appBar() {
+    return AppBar(
+      backgroundColor: Colors.green,
+      title: Text('LOGO'),
+      leading: Icon(Icons.menu),
+      actions: [
+        IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              return;
+            })
+      ],
     );
   }
 }
