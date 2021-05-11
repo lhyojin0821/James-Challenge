@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lhj_practice/pageTwo.dart';
 
 void main() {
   runApp(MainSys());
@@ -44,7 +45,11 @@ class MainPage extends StatelessWidget {
         itemCount: this.data.length,
         itemBuilder: (BuildContext context, int i) {
           return _gridTile(
-              imgUrl: this.data[i]['imgUrl'], name: this.data[i]['name']);
+            imgUrl: this.data[i]['imgUrl'],
+            name: this.data[i]['name'],
+            context: context,
+            value: i,
+          );
         },
       ),
     );
@@ -80,47 +85,89 @@ class MainPage extends StatelessWidget {
     },
   ];
 
-  Widget _gridTile({@required String imgUrl, @required String name}) {
-    return Container(
-      color: Colors.green,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            padding: EdgeInsets.only(right: 10.0),
-            alignment: Alignment.centerRight,
-            color: Colors.pink,
-            child: Icon(Icons.more_horiz),
-          ),
-          Container(
-            width: 60.0,
-            height: 60.0,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(60.0),
-                color: Colors.yellow,
-                image: DecorationImage(
-                    fit: BoxFit.cover, image: NetworkImage(imgUrl))),
-          ),
-          Container(
-            child: Text(
-              name,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+  Widget _gridTile(
+      {@required BuildContext context,
+      @required String imgUrl,
+      @required String name,
+      @required int value}) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (BuildContext context) {
+          return PageTwo(
+              name: name,
+              value: (() {
+                // List<int> l = this.data.map<int>((Map<String, String> e) {
+                //   if (e['name'] == name) {
+                //     return this.data.indexOf(e);
+                //   }
+                //   return null;
+                // }).toList();
+                // print(l);
+                // List<int> r = l.where((element) {
+                //   if (element != null) {
+                //     return true;
+                //   }
+                //   return false;
+                // }).toList();
+                // print(r);
+                int t = ((this.data.map<int>((Map<String, String> e) {
+                  if (e['name'] == name) {
+                    return this.data.indexOf(e);
+                  }
+                  return null;
+                }).toList())
+                    .where((int element) {
+                  if (element != null) {
+                    return true;
+                  }
+                  return false;
+                }).toList()[0]);
+                return t;
+              })());
+        }));
+      },
+      child: Container(
+        color: Colors.green,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              padding: EdgeInsets.only(right: 10.0),
+              alignment: Alignment.centerRight,
+              color: Colors.pink,
+              child: Icon(Icons.more_horiz),
+            ),
+            Container(
+              width: 60.0,
+              height: 60.0,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(60.0),
+                  color: Colors.yellow,
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: NetworkImage(imgUrl))),
+            ),
+            Container(
+              child: Text(
+                name,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                ),
               ),
             ),
-          ),
-          Container(
-            color: Colors.purple,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Icon(Icons.person),
-                Icon(Icons.arrow_circle_up),
-              ],
+            Container(
+              color: Colors.purple,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.person),
+                  Icon(Icons.arrow_circle_up),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
