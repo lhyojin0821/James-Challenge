@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lhj/pageTwo.dart';
 
 void main() {
   runApp(new MainSys()); //플러터 실행하는 함수
@@ -49,7 +50,11 @@ class MainPage extends StatelessWidget {
         // children: this._makeWidgets(this.data),
         itemCount: this.data.length,
         itemBuilder: (BuildContext context, int i) => this._gridTile(
-            imgUrl: this.data[i]['imgUrl'], name: this.data[i]['name']),
+          imgUrl: this.data[i]['imgUrl'],
+          name: this.data[i]['name'],
+          context: context,
+          value: i,
+        ),
       ),
     );
   }
@@ -74,25 +79,25 @@ class MainPage extends StatelessWidget {
 
   // --> [_gridTile(data[0],_gridTile(data[1],_gridTile(data[2],]
 
-  List<Widget> _makeWidgets(List<Map<String, String>> dataList) {
-    // this.data || args -> dataList
-    // (1) for문을 사용해서 새로운 배열을 만들기
-    // List<Widget> newWidgets = [];
-    // for (int i = 0; i < dataList.length; i++) {
-    //   newWidgets.add(this
-    //       ._gridTile(imgUrl: dataList[i]['imgUrl'], name: dataList[i]['name']));
-    // }
-    // return newWidgets;
-    // (2) List 함수 map() 새로운 배열 <-> forEach() 행위만
-    // List<Widget> result = dataList.map<Widget>((Map<String, String> e) {
-    //   return this._gridTile(imgUrl: e['imgUrl'], name: e['name']);
-    // }).toList();
-    // return result;
+  // List<Widget> _makeWidgets(List<Map<String, String>> dataList) {
+  // this.data || args -> dataList
+  // (1) for문을 사용해서 새로운 배열을 만들기
+  // List<Widget> newWidgets = [];
+  // for (int i = 0; i < dataList.length; i++) {
+  //   newWidgets.add(this
+  //       ._gridTile(imgUrl: dataList[i]['imgUrl'], name: dataList[i]['name']));
+  // }
+  // return newWidgets;
+  // (2) List 함수 map() 새로운 배열 <-> forEach() 행위만
+  // List<Widget> result = dataList.map<Widget>((Map<String, String> e) {
+  //   return this._gridTile(imgUrl: e['imgUrl'], name: e['name']);
+  // }).toList();
+  // return result;
 
-    return dataList.map<Widget>((Map<String, String> e) {
-      return this._gridTile(imgUrl: e['imgUrl'], name: e['name']);
-    }).toList();
-  }
+  //   return dataList.map<Widget>((Map<String, String> e) {
+  //     return this._gridTile(imgUrl: e['imgUrl'], name: e['name']);
+  //   }).toList();
+  // }
 
   PreferredSizeWidget _appBar() => AppBar(
         backgroundColor: Colors.green,
@@ -111,55 +116,109 @@ class MainPage extends StatelessWidget {
         ],
       );
   Widget _gridTile(
-          {
-          // @required BuildContext context,
+          {@required BuildContext context,
           @required String imgUrl,
-          @required String name}) =>
-      Container(
-        color: Colors.green,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              // width: (MediaQuery.of(context).size.width / 2) - 5.0,
-              // height: 20.0,
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.only(right: 10.0),
-              color: Colors.pink,
-              child: Icon(Icons.more_horiz),
+          @required String name,
+          @required int value}) =>
+      GestureDetector(
+        // -> 클릭이나 드래그... -> 애니메이션 효과가 없음
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => new PageTwo(
+              name: name,
+              // value: value,
+              value: (() {
+                // List<int> l = this.data.map<int>((Map<String, String> e) {
+                //   if (e['name'] == name) {
+                //     return this.data.indexOf(e);
+                //   }
+                //   return null;
+                // }).toList();
+                // print(l);
+                // List<int> r = l.where((int element) {
+                //   if (element != null) return true;
+                //   return false;
+                // }).toList();
+                // print(r);
+                // 줄여서 쓰는 법
+                int t = ((this.data.map<int>((Map<String, String> e) {
+                  if (e['name'] == name) {
+                    return this.data.indexOf(e);
+                  }
+                  return null;
+                }).toList())
+                    .where((int element) {
+                  if (element != null) return true;
+                  return false;
+                }).toList())[0];
+
+                // 줄여서 쓰는 법2 --> where 이 r2를 수정하지 못함
+                // List<int> r2 = this.data.map<int>((Map<String, String> e) {
+                //   if (e['name'] == name) {
+                //     return this.data.indexOf(e);
+                //   }
+                //   return null;
+                // }).toList()
+                //   ..where((int element) {
+                //     if (element != null) return true;
+                //     return false;
+                //   }).toList();
+
+                // return r[0];
+                return t;
+                // return r2[0];
+              })(),
             ),
-            Container(
-              width: 60.0,
-              height: 60.0,
-              decoration: BoxDecoration(
-                color: Colors.yellow,
-                borderRadius: BorderRadius.circular(60.0),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(imgUrl),
+          ),
+        ),
+
+        // InKWell -> 단순클릭, 길게 눌렀을 / 애니메이션 효과가 있음
+        child: Container(
+          color: Colors.green,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                // width: (MediaQuery.of(context).size.width / 2) - 5.0,
+                // height: 20.0,
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.only(right: 10.0),
+                color: Colors.pink,
+                child: Icon(Icons.more_horiz),
+              ),
+              Container(
+                width: 60.0,
+                height: 60.0,
+                decoration: BoxDecoration(
+                  color: Colors.yellow,
+                  borderRadius: BorderRadius.circular(60.0),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(imgUrl),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              child: Text(
-                name,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
+              Container(
+                child: Text(
+                  name,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              color: Colors.purple,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.person),
-                  Icon(Icons.arrow_circle_up),
-                ],
+              Container(
+                color: Colors.purple,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(Icons.person),
+                    Icon(Icons.arrow_circle_up),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 }
