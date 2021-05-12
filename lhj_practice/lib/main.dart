@@ -21,75 +21,60 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       appBar: _appBar(),
       body: GridView.builder(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 10.0,
           crossAxisSpacing: 10.0,
         ),
-        // children: [
-        //   _gridTile(
-        //     imgUrl: this.data[0]['imgUrl'],
-        //     name: this.data[0]['name'],
-        //   ),
-        //   _gridTile(
-        //     imgUrl: this.data[1]['imgUrl'],
-        //     name: this.data[1]['name'],
-        //   ),
-        //   _gridTile(
-        //     imgUrl: this.data[2]['imgUrl'],
-        //     name: this.data[2]['name'],
-        //   ),
-        // ],
-        // children: _makeWidgets(this.data),
         itemCount: this.data.length,
         itemBuilder: (BuildContext context, int i) {
           return _gridTile(
-            imgUrl: this.data[i]['imgUrl'],
-            name: this.data[i]['name'],
-            context: context,
-            value: i,
-          );
+              value: i,
+              context: context,
+              imgUrl: this.data[i]['imgUrl'],
+              name: this.data[i]['name']);
         },
       ),
     );
   }
 
-  List<Widget> _makeWidgets(List<Map<String, String>> dataList) {
-    // return dataList.map((Map<String, String> e) {
-    //   return _gridTile(imgUrl: e['imgUrl'], name: e['name']);
-    // }).toList();
-    // List<Widget> newWidgets = [];
-    // for (int i = 0; i < dataList.length; i++) {
-    //   newWidgets.add(
-    //       _gridTile(imgUrl: dataList[i]['imgUrl'], name: dataList[i]['name']));
-    // }
-    // return newWidgets;
-  }
-
   List<Map<String, String>> data = [
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDN8fG11c2ljfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1620753980628-e3813ec46b41?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'EDM'
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG11c2ljfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1620704087652-f4f843f04e6b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
       'name': 'POP'
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1504898770365-14faca6a7320?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzB8fG11c2ljfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      'name': 'HiP HOP'
+          'https://images.unsplash.com/photo-1620757482070-4994c580db7a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxOHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': 'K-POP'
     },
   ];
 
-  Widget _gridTile(
-      {@required BuildContext context,
-      @required String imgUrl,
-      @required String name,
-      @required int value}) {
+  // List<Widget> _makeWidgets(List<Map<String, String>> dataList) {
+  //   return this.data.map<Widget>((Map<String, String> e) {
+  //     return _gridTile(imgUrl: e['imgUrl'], name: e['name']);
+  //   }).toList();
+  // List<Widget> newWidgets = [];
+  // for (int i = 0; i < dataList.length; i++) {
+  //   newWidgets.add(
+  //       _gridTile(imgUrl: dataList[i]['imgUrl'], name: dataList[i]['name']));
+  // }
+  // return newWidgets;
+  // }
+
+  Widget _gridTile({
+    @required BuildContext context,
+    @required String imgUrl,
+    @required String name,
+    @required int value,
+  }) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -117,12 +102,12 @@ class MainPage extends StatelessWidget {
                   }
                   return null;
                 }).toList())
-                    .where((int element) {
+                    .where((element) {
                   if (element != null) {
                     return true;
                   }
                   return false;
-                }).toList()[0]);
+                }).toList())[0];
                 return t;
               })());
         }));
@@ -135,6 +120,7 @@ class MainPage extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(right: 10.0),
               alignment: Alignment.centerRight,
+              // width: MediaQuery.of(context).size.width,
               color: Colors.pink,
               child: Icon(Icons.more_horiz),
             ),
@@ -142,18 +128,15 @@ class MainPage extends StatelessWidget {
               width: 60.0,
               height: 60.0,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(60.0),
                   color: Colors.yellow,
+                  borderRadius: BorderRadius.circular(60.0),
                   image: DecorationImage(
                       fit: BoxFit.cover, image: NetworkImage(imgUrl))),
             ),
             Container(
               child: Text(
                 name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
               ),
             ),
             Container(
@@ -177,13 +160,7 @@ class MainPage extends StatelessWidget {
       backgroundColor: Colors.green,
       title: Text('LOGO'),
       leading: Icon(Icons.menu),
-      actions: [
-        IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              return;
-            })
-      ],
+      actions: [IconButton(icon: Icon(Icons.settings), onPressed: () {})],
     );
   }
 }
