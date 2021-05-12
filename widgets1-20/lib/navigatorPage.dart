@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgets/sliverappbar.dart';
 
 class NavigatorPage extends StatefulWidget {
   String data;
@@ -26,7 +27,16 @@ class _NavigatorPageState extends State<NavigatorPage> {
                 child: Text('뒤로이동'),
                 onTap: () {
                   Navigator.of(context).pop('backValue');
-                })
+                }),
+            GestureDetector(
+              child: Text('다음페이지'),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return SliverAppBarPage();
+                }));
+              },
+            ),
           ],
         ),
       ),
