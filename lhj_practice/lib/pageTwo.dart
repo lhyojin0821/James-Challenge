@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class PageTwo extends StatelessWidget {
   String name;
   int value;
+
   PageTwo({@required this.name, @required this.value});
   @override
   Widget build(BuildContext context) {
@@ -11,18 +12,18 @@ class PageTwo extends StatelessWidget {
         title: Text(this.value.toString()),
       ),
       body: ListView(
-        children: ['a', 2, 3, 4].map<Widget>((_) {
-          return this._listTile(
+        children: [1, 2, 3, 4].map((_) {
+          return _listTile(
+              context: context,
               leading: Icon(Icons.person),
               title: Text('Title'),
               subtitle: Text('subTitle'),
               trailing: Icon(Icons.navigate_next),
               onTap: () {
                 print(_);
-              },
-              context: context);
+              });
         }).toList(),
-        // children: [1, 2, 3, 4].map<Widget>((_) {
+        // children: [1, 2, 3, 4].map((_) {
         //   return ListTile(
         //     leading: Icon(Icons.person),
         //     title: Text('Title'),
@@ -53,10 +54,11 @@ class PageTwo extends StatelessWidget {
               child: leading,
             ),
             Container(
-              padding: EdgeInsets.all(5.0),
               alignment: Alignment.centerLeft,
               width: MediaQuery.of(context).size.width - 48.0 - 20.0,
+              padding: EdgeInsets.all(5.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [title, subtitle],
               ),
             ),

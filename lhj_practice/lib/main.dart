@@ -42,38 +42,38 @@ class MainPage extends StatelessWidget {
   List<Map<String, String>> data = [
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620753980628-e3813ec46b41?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1620800390262-00f3ff478212?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'EDM'
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620704087652-f4f843f04e6b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
+          'https://images.unsplash.com/photo-1585399000684-d2f72660f092?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'POP'
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620757482070-4994c580db7a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxOHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1620704087652-f4f843f04e6b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
       'name': 'K-POP'
     },
   ];
 
-  // List<Widget> _makeWidgets(List<Map<String, String>> dataList) {
-  //   return this.data.map<Widget>((Map<String, String> e) {
+  // List<Widget> _makeWidgets() {
+  //   return this.data.map((Map<String, String> e) {
   //     return _gridTile(imgUrl: e['imgUrl'], name: e['name']);
   //   }).toList();
   // List<Widget> newWidgets = [];
-  // for (int i = 0; i < dataList.length; i++) {
-  //   newWidgets.add(
-  //       _gridTile(imgUrl: dataList[i]['imgUrl'], name: dataList[i]['name']));
+  // for (int i = 0; i < this.data.length; i++) {
+  //   newWidgets.add(_gridTile(
+  //       imgUrl: this.data[i]['imgUrl'], name: this.data[i]['name']));
   // }
   // return newWidgets;
   // }
 
   Widget _gridTile({
+    @required int value,
     @required BuildContext context,
     @required String imgUrl,
     @required String name,
-    @required int value,
   }) {
     return GestureDetector(
       onTap: () {
@@ -82,21 +82,19 @@ class MainPage extends StatelessWidget {
           return PageTwo(
               name: name,
               value: (() {
-                // List<int> l = this.data.map<int>((Map<String, String> e) {
+                // List<int> l = this.data.map((Map<String, String> e) {
                 //   if (e['name'] == name) {
                 //     return this.data.indexOf(e);
                 //   }
                 //   return null;
                 // }).toList();
-                // print(l);
                 // List<int> r = l.where((element) {
                 //   if (element != null) {
                 //     return true;
                 //   }
                 //   return false;
                 // }).toList();
-                // print(r);
-                int t = ((this.data.map<int>((Map<String, String> e) {
+                int t = ((this.data.map((Map<String, String> e) {
                   if (e['name'] == name) {
                     return this.data.indexOf(e);
                   }
@@ -107,7 +105,7 @@ class MainPage extends StatelessWidget {
                     return true;
                   }
                   return false;
-                }).toList())[0];
+                }).toList()[0]);
                 return t;
               })());
         }));
@@ -120,7 +118,6 @@ class MainPage extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(right: 10.0),
               alignment: Alignment.centerRight,
-              // width: MediaQuery.of(context).size.width,
               color: Colors.pink,
               child: Icon(Icons.more_horiz),
             ),
@@ -128,8 +125,8 @@ class MainPage extends StatelessWidget {
               width: 60.0,
               height: 60.0,
               decoration: BoxDecoration(
-                  color: Colors.yellow,
                   borderRadius: BorderRadius.circular(60.0),
+                  color: Colors.yellow,
                   image: DecorationImage(
                       fit: BoxFit.cover, image: NetworkImage(imgUrl))),
             ),
