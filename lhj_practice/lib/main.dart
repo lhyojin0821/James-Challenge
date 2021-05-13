@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lhj_practice/models/mainModel.dart';
 import 'package:lhj_practice/pageTwo.dart';
 
 void main() {
@@ -16,8 +17,48 @@ class MainSys extends StatelessWidget {
 }
 
 class MainPage extends StatelessWidget {
+  List<MainModel> transModel() {
+    // List<MainModel> result =
+    //     this.vData.map<MainModel>((Map<String, dynamic> ele) {
+    //   return new MainModel(
+    //       imgUrl: ele['imgUrl'].toString(),
+    //       name: ele['name'].toString(),
+    //       datas: List.from(ele['datas']));
+    // }).toList();
+    // List<MainModel> result =
+    //     this.vData.map<MainModel>((Map<String, dynamic> element) {
+    //   return new MainModel.fFrom(ele: element);
+    // }).toList();
+    // return result;
+    // List<MainModel> result =
+    //     this.vData.map<MainModel>((Map<String, dynamic> element) {
+    //   return new MainModel.fFrom(ele: element);
+    // }).toList();
+    // return result;
+    List<MainModel> result =
+        this.vData.map<MainModel>((Map<String, dynamic> element) {
+      return new MainModel.fFrom2(ele2: element);
+    }).toList();
+    return result;
+  }
+
+  List<MainModel> modelViewData;
+
+  MainPage() {
+    this.modelViewData = transModel();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // 1
+    // List<MainModel> result =
+    //     this.vData.map<MainModel>((Map<String, dynamic> ele) {
+    //   return new MainModel(
+    //       imgUrl: ele['imgUrl'].toString(),
+    //       name: ele['name'].toString(),
+    //       datas: List.from(ele['datas']));
+    // }).toList();
+    // print(result);
     return Scaffold(
       appBar: _appBar(),
       body: GridView.builder(
@@ -27,13 +68,13 @@ class MainPage extends StatelessWidget {
           mainAxisSpacing: 10.0,
           crossAxisSpacing: 10.0,
         ),
-        itemCount: this.data.length,
+        itemCount: this.modelViewData.length,
         itemBuilder: (BuildContext context, int i) {
           return _gridTile(
               value: i,
               context: context,
-              imgUrl: this.data[i]['imgUrl'],
-              name: this.data[i]['name']);
+              imgUrl: this.modelViewData[i].imgUrl,
+              name: this.modelViewData[i].name);
         },
       ),
     );
@@ -54,6 +95,26 @@ class MainPage extends StatelessWidget {
       'imgUrl':
           'https://images.unsplash.com/photo-1620704087652-f4f843f04e6b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
       'name': 'K-POP'
+    },
+  ];
+  List<Map<String, dynamic>> vData = [
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1620800390262-00f3ff478212?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': 'EDM',
+      'datas': [1, 2, 3, 4]
+    },
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1585399000684-d2f72660f092?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': 'POP',
+      'datas': [5, 6],
+    },
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1620704087652-f4f843f04e6b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
+      'name': 'K-POP',
+      'datas': [7, 8],
     },
   ];
 
@@ -80,6 +141,8 @@ class MainPage extends StatelessWidget {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (BuildContext context) {
           return PageTwo(
+              // datas: List.from(this.vData[value]['datas']),
+              datas: this.modelViewData[value].datas,
               name: name,
               value: (() {
                 // List<int> l = this.data.map((Map<String, String> e) {

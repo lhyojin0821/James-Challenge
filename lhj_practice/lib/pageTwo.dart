@@ -3,26 +3,37 @@ import 'package:flutter/material.dart';
 class PageTwo extends StatelessWidget {
   String name;
   int value;
+  List datas;
 
-  PageTwo({@required this.name, @required this.value});
+  PageTwo({@required this.name, @required this.value, @required this.datas});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(this.value.toString()),
       ),
-      body: ListView(
-        children: [1, 2, 3, 4].map((_) {
-          return _listTile(
-              context: context,
+      body: ListView.builder(
+        itemCount: this.datas.length,
+        itemBuilder: (BuildContext context, int i) {
+          return this._listTile(
               leading: Icon(Icons.person),
-              title: Text('Title'),
-              subtitle: Text('subTitle'),
+              title: Text(this.datas[i].toString()),
+              subtitle: Text(''),
               trailing: Icon(Icons.navigate_next),
-              onTap: () {
-                print(_);
-              });
-        }).toList(),
+              onTap: () {},
+              context: context);
+        },
+        // children: [1, 2, 3, 4].map((_) {
+        //   return _listTile(
+        //       context: context,
+        //       leading: Icon(Icons.person),
+        //       title: Text('Title'),
+        //       subtitle: Text('subTitle'),
+        //       trailing: Icon(Icons.navigate_next),
+        //       onTap: () {
+        //         print(_);
+        //       });
+        // }).toList(),
         // children: [1, 2, 3, 4].map((_) {
         //   return ListTile(
         //     leading: Icon(Icons.person),

@@ -31,7 +31,7 @@ class MainPage extends StatelessWidget {
         //     (Map<String, dynamic> ele) => new MainModel.ffrom(ele: ele)).toList();
         // return result;
         // (Map<String, dynamic> ele) => new MainModel.fFrom1(ele: ele)).toList();
-        (Map<String, dynamic> ele) => new MainModel.fFrom2(ele: ele)).toList();
+        (Map<String, dynamic> element) => new MainModel.fFrom2(ele: element)).toList();
     return result;
   }
 
