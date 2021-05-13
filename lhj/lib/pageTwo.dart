@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class PageTwo extends StatelessWidget {
   String name;
   int value;
-  PageTwo({@required this.name, @required this.value});
+  List datas;
+
+  PageTwo({@required this.name, @required this.value, @required this.datas});
 
   @override
   Widget build(BuildContext context) {
@@ -11,27 +13,37 @@ class PageTwo extends StatelessWidget {
       appBar: AppBar(
         title: Text(this.value.toString()),
       ),
-      body: ListView(
-        children: [1, 2, 3, 4]
-            .map<Widget>(
-              (_) => this._listTile(
-                context: context,
-                leading: Icon(Icons.person),
-                title: Text(
-                  'Title',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-                subtitle: Text(
-                  'subTitle',
-                  style: TextStyle(fontSize: 12.0, color: Colors.grey),
-                ),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () {
-                  print(_);
-                },
-              ),
-            )
-            .toList(),
+      body: ListView.builder(
+        itemCount: this.datas.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _listTile(
+              context: context,
+              leading: Icon(Icons.person),
+              title: Text(this.datas[index].toString()),
+              subtitle: Text(''),
+              trailing: Icon(Icons.navigate_next),
+              onTap: () {});
+        },
+        // children: [1, 2, 3, 4]
+        //     .map<Widget>(
+        //       (_) => this._listTile(
+        //         context: context,
+        //         leading: Icon(Icons.person),
+        //         title: Text(
+        //           'Title',
+        //           style: TextStyle(fontSize: 16.0),
+        //         ),
+        //         subtitle: Text(
+        //           'subTitle',
+        //           style: TextStyle(fontSize: 12.0, color: Colors.grey),
+        //         ),
+        //         trailing: Icon(Icons.navigate_next),
+        //         onTap: () {
+        //           print(_);
+        //         },
+        //       ),
+        //     )
+        //     .toList(),
         // children: [1, 2, 3, 4]
         //     .map<Widget>((_) => ListTile(
         //           leading: Icon(Icons.person),

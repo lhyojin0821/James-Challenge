@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lhj/models/mainModel.dart';
 import 'package:lhj/pageTwo.dart';
 
 void main() {
@@ -19,9 +20,46 @@ class MainSys extends StatelessWidget {
 
 // - page 단위 Scaffold 필요한만큼
 class MainPage extends StatelessWidget {
+  List<MainModel> transModel() {
+    List<MainModel> result = this.vData.map<MainModel>(
+        //   (Map<String, dynamic> ele) => new MainModel(
+        //     imgUrl: ele['imgUrl'].toString(),
+        //     name: ele['name'].toString(),
+        //     datas: List.from(ele['datas']),
+        //   ),
+        // )
+        //     (Map<String, dynamic> ele) => new MainModel.ffrom(ele: ele)).toList();
+        // return result;
+        // (Map<String, dynamic> ele) => new MainModel.fFrom1(ele: ele)).toList();
+        (Map<String, dynamic> ele) => new MainModel.fFrom2(ele: ele)).toList();
+    return result;
+  }
+
+  List<MainModel> modelViewData;
+
+  MainPage() {
+    //(*2)
+    this.modelViewData = this.transModel();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // (* 1)
+    // List<MainModel> result = this
+    //     .vData
+    //     .map<MainModel>(
+    //       (Map<String, dynamic> ele) => new MainModel(
+    //     imgUrl: ele['imgUrl'].toString(),
+    //     name: ele['name'].toString(),
+    //     datas: List.from(ele['datas']),
+    //   ),
+    // )
+    //     .toList();
+    //
+    // print('1 : $result');
+    print('2: $modelViewData');
     return new Scaffold(
+      // (*3) extends || mixIn
       appBar: this._appBar(),
       body: new GridView.builder(
         padding: EdgeInsets.all(10.0),
@@ -48,10 +86,10 @@ class MainPage extends StatelessWidget {
         //   ),
         // ],
         // children: this._makeWidgets(this.data),
-        itemCount: this.data.length,
+        itemCount: this.modelViewData.length,
         itemBuilder: (BuildContext context, int i) => this._gridTile(
-          imgUrl: this.data[i]['imgUrl'],
-          name: this.data[i]['name'],
+          imgUrl: this.modelViewData[i].imgUrl,
+          name: this.modelViewData[i].name,
           context: context,
           value: i,
         ),
@@ -63,7 +101,7 @@ class MainPage extends StatelessWidget {
     {
       'imgUrl':
           'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
-      'name': '홍길동'
+      'name': '홍길동',
     },
     {
       'imgUrl':
@@ -74,6 +112,26 @@ class MainPage extends StatelessWidget {
       'imgUrl':
           'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
       'name': '한라산'
+    }
+  ];
+  List<Map<String, dynamic>> vData = [
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+      'name': '홍길동',
+      'datas': [1, 2, 3, 4, 5],
+    },
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1620238669212-cb4942397110?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': '백두산',
+      'datas': [6, 7],
+    },
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+      'name': '한라산',
+      'datas': [7, 8, 9],
     }
   ];
 
@@ -125,9 +183,12 @@ class MainPage extends StatelessWidget {
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) => new PageTwo(
+              // datas: List.from(this.vData[value]['datas']),
+              datas: this.modelViewData[value].datas,
               name: name,
               // value: value,
               value: (() {
+                // 순번을 찾는 행
                 // List<int> l = this.data.map<int>((Map<String, String> e) {
                 //   if (e['name'] == name) {
                 //     return this.data.indexOf(e);
