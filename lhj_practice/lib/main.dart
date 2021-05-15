@@ -27,17 +27,19 @@ class MainPage extends StatelessWidget {
   //   }).toList();
   //   return result;
   // }
+
   // List<MainModel> transModel() {
   //   List<MainModel> result =
   //       this.vData.map<MainModel>((Map<String, dynamic> e) {
-  //     return MainModel.from1(ele: e);
+  //     return MainModel.fFrom1(ele: e);
   //   }).toList();
   //   return result;
   // }
+
   List<MainModel> transModel() {
     List<MainModel> result =
         this.vData.map<MainModel>((Map<String, dynamic> e) {
-      return MainModel.from2(ele: e);
+      return MainModel.fFrom2(ele: e);
     }).toList();
     return result;
   }
@@ -47,7 +49,6 @@ class MainPage extends StatelessWidget {
   MainPage() {
     this.modelViewData = transModel();
   }
-
   @override
   Widget build(BuildContext context) {
     // List<MainModel> result =
@@ -57,9 +58,7 @@ class MainPage extends StatelessWidget {
     //       name: e['name'].toString(),
     //       datas: List.from(e['datas']));
     // }).toList();
-    // print('1 = $result');
-    // print('2 = $modelViewData');
-
+    // print(result);
     return Scaffold(
       appBar: _appBar(),
       body: GridView.builder(
@@ -77,7 +76,6 @@ class MainPage extends StatelessWidget {
               imgUrl: this.modelViewData[i].imgUrl,
               name: this.modelViewData[i].name);
         },
-
         // children: _makeWidgets(),
       ),
     );
@@ -86,36 +84,36 @@ class MainPage extends StatelessWidget {
   List<Map<String, String>> data = [
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620944614586-7dc980ea2f0c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      'name': 'EDM'
+          'https://images.unsplash.com/photo-1608134379919-a73784b0787c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': 'EDM',
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620941535699-52b7eafbabd2?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1608291790905-5faeccf569bb?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'POP'
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620975888690-dac5dd43cb0c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1620994446450-78ebbae401ea?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'K-POP'
     },
   ];
   List<Map<String, dynamic>> vData = [
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620944614586-7dc980ea2f0c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1608134379919-a73784b0787c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'EDM',
       'datas': [1, 2, 3, 4]
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620941535699-52b7eafbabd2?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1608291790905-5faeccf569bb?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'POP',
-      'datas': [5, 6, 7]
+      'datas': [5, 6, 7],
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620975888690-dac5dd43cb0c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1620994446450-78ebbae401ea?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'K-POP',
       'datas': [8, 9]
     },
@@ -130,7 +128,7 @@ class MainPage extends StatelessWidget {
   //   return newWidgets;
   // }
   // List<Widget> _makeWidgets() {
-  //   return this.data.map<Widget>((Map<String, String> e) {
+  //   return this.data.map((Map<String, String> e) {
   //     return _gridTile(imgUrl: e['imgUrl'], name: e['name']);
   //   }).toList();
   // }
@@ -184,12 +182,18 @@ class MainPage extends StatelessWidget {
               width: 60.0,
               height: 60.0,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(60.0),
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: NetworkImage(imgUrl))),
+                borderRadius: BorderRadius.circular(60.0),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(imgUrl),
+                ),
+              ),
             ),
             Container(
-              child: Text(name),
+              child: Text(
+                name,
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              ),
             ),
             Container(
               child: Row(
@@ -206,17 +210,12 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _appBar() {
+  Widget _appBar() {
     return AppBar(
       backgroundColor: Colors.green,
       title: Text('LOGO'),
       leading: Icon(Icons.menu),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.settings),
-          onPressed: () {},
-        ),
-      ],
+      actions: [IconButton(icon: Icon(Icons.settings), onPressed: () {})],
     );
   }
 }

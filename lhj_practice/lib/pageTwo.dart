@@ -23,20 +23,30 @@ class PageTwo extends StatelessWidget {
               onTap: () {},
               context: context);
         },
-        // children: [1, 2, 3, 4].map((_) {
-        //   return _listTile(
-        //       leading: Icon(Icons.person),
-        //       title: Text('Title'),
-        //       subtitle: Text('subTitle'),
-        //       trailing: Icon(Icons.navigate_next),
-        //       onTap: () {},
-        //       context: context);
-        // }).toList(),
+        // children: [1, 2, 3, 4]
+        //     .map((_) => _listTile(
+        //         leading: Icon(Icons.person),
+        //         title: Text(
+        //           'Title',
+        //           style: TextStyle(fontSize: 16.0),
+        //         ),
+        //         subtitle: Text(
+        //           'subTitle',
+        //           style: TextStyle(fontSize: 12.0, color: Colors.grey),
+        //         ),
+        //         trailing: Icon(Icons.navigate_next),
+        //         onTap: () {},
+        //         context: context))
+        //     .toList(),
         // children: [1, 2, 3, 4].map((_) {
         //   return ListTile(
         //     leading: Icon(Icons.person),
-        //     title: Text('Title'),
-        //     subtitle: Text('subTitle'),
+        //     title: Text(
+        //       'Title',
+        //     ),
+        //     subtitle: Text(
+        //       'subTitle',
+        //     ),
         //     trailing: Icon(Icons.navigate_next),
         //   );
         // }).toList(),
@@ -62,8 +72,8 @@ class PageTwo extends StatelessWidget {
               Container(child: leading),
               Container(
                 padding: EdgeInsets.all(5.0),
-                alignment: Alignment.centerLeft,
                 width: MediaQuery.of(context).size.width - 48.0 - 20.0,
+                alignment: Alignment.centerLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [title, subtitle],
