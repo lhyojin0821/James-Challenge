@@ -17,48 +17,27 @@ class MainSys extends StatelessWidget {
 }
 
 class MainPage extends StatelessWidget {
-  // List<MainModel> transModel() {
-  //   List<MainModel> result =
-  //       this.vData.map<MainModel>((Map<String, dynamic> e) {
-  //     return MainModel(
-  //         imgUrl: e['imgUrl'].toString(),
-  //         name: e['name'].toString(),
-  //         datas: List.from(e['datas']));
-  //   }).toList();
-  //   return result;
-  // }
-
-  // List<MainModel> transModel() {
-  //   List<MainModel> result =
-  //       this.vData.map<MainModel>((Map<String, dynamic> e) {
-  //     return MainModel.fFrom1(ele: e);
-  //   }).toList();
-  //   return result;
-  // }
-
   List<MainModel> transModel() {
     List<MainModel> result =
         this.vData.map<MainModel>((Map<String, dynamic> e) {
+      // return MainModel(
+      //   imgUrl: e['imgUrl'].toString(),
+      //   name: e['name'].toString(),
+      //   datas: List.from(e['datas']),
+      // );
+      // return MainModel.fForm1(ele: e);
       return MainModel.fFrom2(ele: e);
     }).toList();
     return result;
   }
 
   List<MainModel> modelViewData;
-
   MainPage() {
     this.modelViewData = transModel();
   }
+
   @override
   Widget build(BuildContext context) {
-    // List<MainModel> result =
-    //     this.vData.map<MainModel>((Map<String, dynamic> e) {
-    //   return MainModel(
-    //       imgUrl: e['imgUrl'].toString(),
-    //       name: e['name'].toString(),
-    //       datas: List.from(e['datas']));
-    // }).toList();
-    // print(result);
     return Scaffold(
       appBar: _appBar(),
       body: GridView.builder(
@@ -76,49 +55,47 @@ class MainPage extends StatelessWidget {
               imgUrl: this.modelViewData[i].imgUrl,
               name: this.modelViewData[i].name);
         },
-        // children: _makeWidgets(),
       ),
     );
   }
 
-  List<Map<String, String>> data = [
-    {
-      'imgUrl':
-          'https://images.unsplash.com/photo-1608134379919-a73784b0787c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      'name': 'EDM',
-    },
-    {
-      'imgUrl':
-          'https://images.unsplash.com/photo-1608291790905-5faeccf569bb?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      'name': 'POP'
-    },
-    {
-      'imgUrl':
-          'https://images.unsplash.com/photo-1620994446450-78ebbae401ea?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      'name': 'K-POP'
-    },
-  ];
   List<Map<String, dynamic>> vData = [
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1608134379919-a73784b0787c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1621135177072-57c9b6242e7a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'EDM',
       'datas': [1, 2, 3, 4]
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1608291790905-5faeccf569bb?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1595909336425-5bf541155dec?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'POP',
-      'datas': [5, 6, 7],
+      'datas': [5, 6, 7]
     },
     {
       'imgUrl':
-          'https://images.unsplash.com/photo-1620994446450-78ebbae401ea?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+          'https://images.unsplash.com/photo-1612899329140-7f16de31c54f?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'K-POP',
       'datas': [8, 9]
     },
   ];
-
+  List<Map<String, String>> data = [
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1621135177072-57c9b6242e7a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': 'EDM'
+    },
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1595909336425-5bf541155dec?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': 'POP'
+    },
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1612899329140-7f16de31c54f?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': 'K-POP'
+    },
+  ];
   // List<Widget> _makeWidgets() {
   //   List<Widget> newWidgets = [];
   //   for (int i = 0; i < this.data.length; i++) {
@@ -128,7 +105,7 @@ class MainPage extends StatelessWidget {
   //   return newWidgets;
   // }
   // List<Widget> _makeWidgets() {
-  //   return this.data.map((Map<String, String> e) {
+  //   return this.data.map<Widget>((Map<String, String> e) {
   //     return _gridTile(imgUrl: e['imgUrl'], name: e['name']);
   //   }).toList();
   // }
@@ -182,17 +159,15 @@ class MainPage extends StatelessWidget {
               width: 60.0,
               height: 60.0,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(60.0),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(imgUrl),
-                ),
-              ),
+                  color: Colors.yellow,
+                  borderRadius: BorderRadius.circular(60.0),
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: NetworkImage(imgUrl))),
             ),
             Container(
               child: Text(
                 name,
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16.0),
               ),
             ),
             Container(

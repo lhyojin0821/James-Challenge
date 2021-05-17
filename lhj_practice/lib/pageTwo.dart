@@ -6,6 +6,7 @@ class PageTwo extends StatelessWidget {
   List datas;
 
   PageTwo({@required this.name, @required this.value, @required this.datas});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,30 +24,20 @@ class PageTwo extends StatelessWidget {
               onTap: () {},
               context: context);
         },
-        // children: [1, 2, 3, 4]
-        //     .map((_) => _listTile(
-        //         leading: Icon(Icons.person),
-        //         title: Text(
-        //           'Title',
-        //           style: TextStyle(fontSize: 16.0),
-        //         ),
-        //         subtitle: Text(
-        //           'subTitle',
-        //           style: TextStyle(fontSize: 12.0, color: Colors.grey),
-        //         ),
-        //         trailing: Icon(Icons.navigate_next),
-        //         onTap: () {},
-        //         context: context))
-        //     .toList(),
+        // children: [1, 2, 3, 4].map<Widget>((_) {
+        //   return _listTile(
+        //       leading: Icon(Icons.person),
+        //       title: Text('Title'),
+        //       subtitle: Text('subTitle'),
+        //       trailing: Icon(Icons.navigate_next),
+        //       onTap: () {},
+        //       context: context);
+        // }).toList(),
         // children: [1, 2, 3, 4].map((_) {
         //   return ListTile(
         //     leading: Icon(Icons.person),
-        //     title: Text(
-        //       'Title',
-        //     ),
-        //     subtitle: Text(
-        //       'subTitle',
-        //     ),
+        //     title: Text('Title'),
+        //     subtitle: Text('subTitle'),
         //     trailing: Icon(Icons.navigate_next),
         //   );
         // }).toList(),
@@ -69,7 +60,9 @@ class PageTwo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(child: leading),
+              Container(
+                child: leading,
+              ),
               Container(
                 padding: EdgeInsets.all(5.0),
                 width: MediaQuery.of(context).size.width - 48.0 - 20.0,

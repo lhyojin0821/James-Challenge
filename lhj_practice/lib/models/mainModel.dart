@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class MainModel {
   String imgUrl;
@@ -7,7 +7,7 @@ class MainModel {
 
   MainModel({@required this.imgUrl, @required this.name, @required this.datas});
 
-  MainModel.fFrom1({@required Map<String, dynamic> ele}) {
+  MainModel.fForm1({@required Map<String, dynamic> ele}) {
     this.imgUrl = ele['imgUrl'].toString();
     this.name = ele['name'].toString();
     this.datas = List.from(ele['datas']);
