@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lhj_practice/models/detailModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
 import 'package:lhj_practice/pageTwo.dart';
+import 'package:lhj_practice/providerEx/testPage.dart';
 
 void main() {
   runApp(MainSys());
@@ -11,19 +13,31 @@ class MainSys extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      // home: MainPage(),
+      home: TestPage(),
     );
   }
 }
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   List<MainModel> transModel() {
     List<MainModel> result =
         this.vData.map<MainModel>((Map<String, dynamic> e) {
       // return MainModel(
       //   imgUrl: e['imgUrl'].toString(),
       //   name: e['name'].toString(),
-      //   datas: List.from(e['datas']),
+      //   datas: List.from(e['datas']).map<DetailModel>((dynamic e) {
+      //     return DetailModel(
+      //         title: e['title'].toString(),
+      //         name: e['name'].toString(),
+      //         des: e['des'].toString(),
+      //         img: e['img'].toString());
+      //   }).toList(),
       // );
       // return MainModel.fForm1(ele: e);
       return MainModel.fFrom2(ele: e);
@@ -32,30 +46,38 @@ class MainPage extends StatelessWidget {
   }
 
   List<MainModel> modelViewData;
-  MainPage() {
+  @override
+  void initState() {
     this.modelViewData = transModel();
+    if (!mounted) return;
+    setState(() {});
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
-      body: GridView.builder(
-        padding: EdgeInsets.all(10.0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 10.0,
-          crossAxisSpacing: 10.0,
-        ),
-        itemCount: this.modelViewData.length,
-        itemBuilder: (BuildContext context, int i) {
-          return _gridTile(
-              value: i,
-              context: context,
-              imgUrl: this.modelViewData[i].imgUrl,
-              name: this.modelViewData[i].name);
-        },
-      ),
+      body: this.modelViewData == null
+          ? Center(
+              child: Text('로딩중'),
+            )
+          : GridView.builder(
+              padding: EdgeInsets.all(10.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+              ),
+              itemCount: this.modelViewData.length,
+              itemBuilder: (BuildContext context, int i) {
+                return _gridTile(
+                    value: i,
+                    context: context,
+                    imgUrl: this.modelViewData[i].imgUrl,
+                    name: this.modelViewData[i].name);
+              },
+            ),
     );
   }
 
@@ -64,21 +86,67 @@ class MainPage extends StatelessWidget {
       'imgUrl':
           'https://images.unsplash.com/photo-1621135177072-57c9b6242e7a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'EDM',
-      'datas': [1, 2, 3, 4]
+      'datas': [
+        {
+          'title': '댄스노래1',
+          'name': '댄스가수1',
+          'des': '가사1',
+          'img':
+              'https://images.unsplash.com/photo-1621135177072-57c9b6242e7a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          'title': '댄스노래2',
+          'name': '댄스가수2',
+          'des': '가사2',
+          'img':
+              'https://images.unsplash.com/photo-1621135177072-57c9b6242e7a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        }
+      ]
     },
     {
       'imgUrl':
           'https://images.unsplash.com/photo-1595909336425-5bf541155dec?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'POP',
-      'datas': [5, 6, 7]
+      'datas': [
+        {
+          'title': '발라드노래1',
+          'name': '발라드가수1',
+          'des': '가사1',
+          'img':
+              'https://images.unsplash.com/photo-1595909336425-5bf541155dec?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          'title': '발라드노래2',
+          'name': '발라드가수2',
+          'des': '가사2',
+          'img':
+              'https://images.unsplash.com/photo-1595909336425-5bf541155dec?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        }
+      ]
     },
     {
       'imgUrl':
           'https://images.unsplash.com/photo-1612899329140-7f16de31c54f?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       'name': 'K-POP',
-      'datas': [8, 9]
+      'datas': [
+        {
+          'title': '힙합노래1',
+          'name': '힙합가수1',
+          'des': '가사1',
+          'img':
+              'https://images.unsplash.com/photo-1612899329140-7f16de31c54f?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          'title': '힙합노래2',
+          'name': '힙합가수2',
+          'des': '가사2',
+          'img':
+              'https://images.unsplash.com/photo-1612899329140-7f16de31c54f?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        }
+      ]
     },
   ];
+
   List<Map<String, String>> data = [
     {
       'imgUrl':
@@ -96,19 +164,6 @@ class MainPage extends StatelessWidget {
       'name': 'K-POP'
     },
   ];
-  // List<Widget> _makeWidgets() {
-  //   List<Widget> newWidgets = [];
-  //   for (int i = 0; i < this.data.length; i++) {
-  //     newWidgets.add(_gridTile(
-  //         imgUrl: this.data[i]['imgUrl'], name: this.data[i]['name']));
-  //   }
-  //   return newWidgets;
-  // }
-  // List<Widget> _makeWidgets() {
-  //   return this.data.map<Widget>((Map<String, String> e) {
-  //     return _gridTile(imgUrl: e['imgUrl'], name: e['name']);
-  //   }).toList();
-  // }
 
   Widget _gridTile({
     @required String imgUrl,
@@ -121,28 +176,29 @@ class MainPage extends StatelessWidget {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (BuildContext context) {
           return PageTwo(
-              datas: this.modelViewData[value].datas,
-              // datas: this.vData[value]['datas'],
-              name: name,
-              value: (() {
-                int t = this
-                    .data
-                    .map<int>((Map<String, String> e) {
-                      if (e['name'] == name) {
-                        return this.data.indexOf(e);
-                      }
-                      return null;
-                    })
-                    .toList()
-                    .where((element) {
-                      if (element != null) {
-                        return true;
-                      }
-                      return false;
-                    })
-                    .toList()[0];
-                return t;
-              })());
+            datas: this.modelViewData[value].datas,
+            // datas: this.vData[value]['datas'],
+            name: name,
+            // value: (() {
+            //   int t = this
+            //       .data
+            //       .map<int>((Map<String, String> e) {
+            //         if (e['name'] == name) {
+            //           return this.data.indexOf(e);
+            //         }
+            //         return null;
+            //       })
+            //       .toList()
+            //       .where((element) {
+            //         if (element != null) {
+            //           return true;
+            //         }
+            //         return false;
+            //       })
+            //       .toList()[0];
+            //   return t;
+            // })()
+          );
         }));
       },
       child: Container(

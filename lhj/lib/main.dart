@@ -1,45 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:lhj/models/detailModel.dart';
 import 'package:lhj/models/mainModel.dart';
 import 'package:lhj/pageTwo.dart';
+import 'package:lhj/poviderex/testPage.dart';
+import 'package:lhj/poviderex/testProvider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(new MainSys()); //플러터 실행하는 함수
 }
 
+// 상태 변수 : 변하는 값 -> 기준 점
 // Widget : stl || stf
+// Provider : 상태 관리 패키지 - 로직
+// --> GetX, MobX ...
+// --> context 에 의존해서 상태관리
 
 // -System 단위 1개만
 class MainSys extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home: new MainPage(),
+      // home: new MainPage(),
+      home: new TestPage(),
     );
   }
 }
 
 // - page 단위 Scaffold 필요한만큼
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   List<MainModel> transModel() {
     List<MainModel> result = this.vData.map<MainModel>(
         //   (Map<String, dynamic> ele) => new MainModel(
         //     imgUrl: ele['imgUrl'].toString(),
         //     name: ele['name'].toString(),
-        //     datas: List.from(ele['datas']),
+        //     //List<DetailModel>[new DetailModel(..),...
+        //     //[{}] -> [new detailModel()]
+        //     datas: List.from(ele['datas']).map((dynamic e) {
+        //       return new DetailModel.init(e: e);
+        //     }).toList(),
         //   ),
         // )
+        // .toList();
         //     (Map<String, dynamic> ele) => new MainModel.ffrom(ele: ele)).toList();
         // return result;
-        // (Map<String, dynamic> ele) => new MainModel.fFrom1(ele: ele)).toList();
-        (Map<String, dynamic> element) => new MainModel.fFrom2(ele: element)).toList();
+        (Map<String, dynamic> ele) => new MainModel.fFrom1(ele: ele)).toList();
+    // (Map<String, dynamic> element) => new MainModel.fFrom2(ele: element)).toList();
     return result;
   }
 
   List<MainModel> modelViewData;
 
-  MainPage() {
-    //(*2)
+  @override
+  void initState() {
     this.modelViewData = this.transModel();
+    if (!mounted) return;
+    setState(() {});
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -58,42 +85,47 @@ class MainPage extends StatelessWidget {
     //
     // print('1 : $result');
     print('2: $modelViewData');
+
     return new Scaffold(
       // (*3) extends || mixIn
       appBar: this._appBar(),
-      body: new GridView.builder(
-        padding: EdgeInsets.all(10.0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 10.0,
-          crossAxisSpacing: 10.0,
-        ),
-        // children: [
-        //   this._gridTile(
-        //     imgUrl:
-        //         'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
-        //     name: '홍길동',
-        //   ),
-        //   this._gridTile(
-        //     imgUrl:
-        //         'https://images.unsplash.com/photo-1620238669212-cb4942397110?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-        //     name: '백두산',
-        //   ),
-        //   this._gridTile(
-        //     imgUrl:
-        //         'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
-        //     name: '한라산',
-        //   ),
-        // ],
-        // children: this._makeWidgets(this.data),
-        itemCount: this.modelViewData.length,
-        itemBuilder: (BuildContext context, int i) => this._gridTile(
-          imgUrl: this.modelViewData[i].imgUrl,
-          name: this.modelViewData[i].name,
-          context: context,
-          value: i,
-        ),
-      ),
+      body: this.modelViewData == null
+          ? Center(
+              child: Text('로딩중...'),
+            )
+          : new GridView.builder(
+              padding: EdgeInsets.all(10.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+              ),
+              // children: [
+              //   this._gridTile(
+              //     imgUrl:
+              //         'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+              //     name: '홍길동',
+              //   ),
+              //   this._gridTile(
+              //     imgUrl:
+              //         'https://images.unsplash.com/photo-1620238669212-cb4942397110?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+              //     name: '백두산',
+              //   ),
+              //   this._gridTile(
+              //     imgUrl:
+              //         'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+              //     name: '한라산',
+              //   ),
+              // ],
+              // children: this._makeWidgets(this.data),
+              itemCount: this.modelViewData.length,
+              itemBuilder: (BuildContext context, int i) => this._gridTile(
+                imgUrl: this.modelViewData[i].imgUrl,
+                name: this.modelViewData[i].name,
+                context: context,
+                value: i,
+              ),
+            ),
     );
   }
 
@@ -114,48 +146,48 @@ class MainPage extends StatelessWidget {
       'name': '한라산'
     }
   ];
+
   List<Map<String, dynamic>> vData = [
     {
       'imgUrl':
           'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
-      'name': '홍길동',
-      'datas': [1, 2, 3, 4, 5],
+      'name': '댄스',
+      'datas': [
+        {
+          'title': '댄스노래1',
+          'name': '댄스가수1',
+          'des': '가사1',
+          'img':
+              'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80'
+        },
+        {'title': '댄스노래2', 'name': '댄스가수2', 'des': '가사2', 'img': ''},
+      ],
     },
     {
       'imgUrl':
           'https://images.unsplash.com/photo-1620238669212-cb4942397110?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      'name': '백두산',
-      'datas': [6, 7],
+      'name': '발라드',
+      'datas': [
+        {
+          'title': '발라드노래1',
+          'name': '발라드가수1',
+          'des': '가사1',
+          'img':
+              'https://images.unsplash.com/photo-1620238669212-cb4942397110?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {'title': '발라드노래2', 'name': '발라드가수2', 'des': '가사2', 'img': ''},
+      ],
     },
     {
       'imgUrl':
           'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
-      'name': '한라산',
-      'datas': [7, 8, 9],
+      'name': '힙합',
+      'datas': [
+        {'title': '힙합노래1', 'name': '힙합가수1', 'des': '가사1', 'img': ''},
+        {'title': '힙합노래2', 'name': '힙합노래2', 'des': '가사2', 'img': ''},
+      ],
     }
   ];
-
-  // --> [_gridTile(data[0],_gridTile(data[1],_gridTile(data[2],]
-
-  // List<Widget> _makeWidgets(List<Map<String, String>> dataList) {
-  // this.data || args -> dataList
-  // (1) for문을 사용해서 새로운 배열을 만들기
-  // List<Widget> newWidgets = [];
-  // for (int i = 0; i < dataList.length; i++) {
-  //   newWidgets.add(this
-  //       ._gridTile(imgUrl: dataList[i]['imgUrl'], name: dataList[i]['name']));
-  // }
-  // return newWidgets;
-  // (2) List 함수 map() 새로운 배열 <-> forEach() 행위만
-  // List<Widget> result = dataList.map<Widget>((Map<String, String> e) {
-  //   return this._gridTile(imgUrl: e['imgUrl'], name: e['name']);
-  // }).toList();
-  // return result;
-
-  //   return dataList.map<Widget>((Map<String, String> e) {
-  //     return this._gridTile(imgUrl: e['imgUrl'], name: e['name']);
-  //   }).toList();
-  // }
 
   PreferredSizeWidget _appBar() => AppBar(
         backgroundColor: Colors.green,
@@ -173,6 +205,7 @@ class MainPage extends StatelessWidget {
           ),
         ],
       );
+
   Widget _gridTile(
           {@required BuildContext context,
           @required String imgUrl,
@@ -186,49 +219,49 @@ class MainPage extends StatelessWidget {
               // datas: List.from(this.vData[value]['datas']),
               datas: this.modelViewData[value].datas,
               name: name,
-              // value: value,
-              value: (() {
-                // 순번을 찾는 행
-                // List<int> l = this.data.map<int>((Map<String, String> e) {
-                //   if (e['name'] == name) {
-                //     return this.data.indexOf(e);
-                //   }
-                //   return null;
-                // }).toList();
-                // print(l);
-                // List<int> r = l.where((int element) {
-                //   if (element != null) return true;
-                //   return false;
-                // }).toList();
-                // print(r);
-                // 줄여서 쓰는 법
-                int t = ((this.data.map<int>((Map<String, String> e) {
-                  if (e['name'] == name) {
-                    return this.data.indexOf(e);
-                  }
-                  return null;
-                }).toList())
-                    .where((int element) {
-                  if (element != null) return true;
-                  return false;
-                }).toList())[0];
 
-                // 줄여서 쓰는 법2 --> where 이 r2를 수정하지 못함
-                // List<int> r2 = this.data.map<int>((Map<String, String> e) {
-                //   if (e['name'] == name) {
-                //     return this.data.indexOf(e);
-                //   }
-                //   return null;
-                // }).toList()
-                //   ..where((int element) {
-                //     if (element != null) return true;
-                //     return false;
-                //   }).toList();
-
-                // return r[0];
-                return t;
-                // return r2[0];
-              })(),
+              // value: (() {
+              //   // 순번을 찾는 행
+              //   // List<int> l = this.data.map<int>((Map<String, String> e) {
+              //   //   if (e['name'] == name) {
+              //   //     return this.data.indexOf(e);
+              //   //   }
+              //   //   return null;
+              //   // }).toList();
+              //   // print(l);
+              //   // List<int> r = l.where((int element) {
+              //   //   if (element != null) return true;
+              //   //   return false;
+              //   // }).toList();
+              //   // print(r);
+              //   // 줄여서 쓰는 법
+              //   int t = ((this.data.map<int>((Map<String, String> e) {
+              //     if (e['name'] == name) {
+              //       return this.data.indexOf(e);
+              //     }
+              //     return null;
+              //   }).toList())
+              //       .where((int element) {
+              //     if (element != null) return true;
+              //     return false;
+              //   }).toList())[0];
+              //
+              //   // 줄여서 쓰는 법2 --> where 이 r2를 수정하지 못함
+              //   // List<int> r2 = this.data.map<int>((Map<String, String> e) {
+              //   //   if (e['name'] == name) {
+              //   //     return this.data.indexOf(e);
+              //   //   }
+              //   //   return null;
+              //   // }).toList()
+              //   //   ..where((int element) {
+              //   //     if (element != null) return true;
+              //   //     return false;
+              //   //   }).toList();
+              //
+              //   // return r[0];
+              //   return t;
+              //   // return r2[0];
+              // })(),
             ),
           ),
         ),

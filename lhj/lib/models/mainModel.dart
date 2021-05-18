@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:lhj/models/detailModel.dart';
 
 // mpa 을 클래스화
 class MainModel {
   String imgUrl;
   String name;
-  List datas;
+  List<DetailModel> datas;
 
   // new MainModel(...);
   MainModel({
@@ -24,10 +25,11 @@ class MainModel {
   // * 시스템적으로 인스턴스를 생성 할 때, 기본 생성자들과 차이가 있음(성능 등)
   factory MainModel.fFrom1({@required Map<String, dynamic> ele}) {
     return new MainModel(
-      imgUrl: ele['imgUrl'].toString(),
-      name: ele['name'].toString(),
-      datas: List.from(ele['datas']),
-    );
+        imgUrl: ele['imgUrl'].toString(),
+        name: ele['name'].toString(),
+        datas: List.from(ele['datas'])
+            .map<DetailModel>((dynamic e) => new DetailModel.init(e: e))
+            .toList());
   }
 
   // return new MainModel.from(ele: ele);

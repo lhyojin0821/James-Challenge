@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:lhj_practice/models/detailModel.dart';
 
 class PageTwo extends StatelessWidget {
   String name;
-  int value;
-  List datas;
+  // int value;
+  List<DetailModel> datas;
 
-  PageTwo({@required this.name, @required this.value, @required this.datas});
+  PageTwo({@required this.name, @required this.datas});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.value.toString()),
-      ),
+          // title: Text(this.value.toString()),
+          ),
       body: ListView.builder(
         itemCount: this.datas.length,
         itemBuilder: (BuildContext context, int i) {
           return _listTile(
               leading: Icon(Icons.person),
-              title: Text(this.datas[i].toString()),
-              subtitle: Text(''),
+              title: Text(
+                this.datas[i].title,
+                style: TextStyle(fontSize: 16.0),
+              ),
+              subtitle: Text(
+                this.datas[i].name,
+                style: TextStyle(fontSize: 12.0, color: Colors.grey),
+              ),
               trailing: Icon(Icons.navigate_next),
               onTap: () {},
               context: context);

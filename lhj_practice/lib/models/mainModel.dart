@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lhj_practice/models/detailModel.dart';
 
 class MainModel {
   String imgUrl;
   String name;
-  List datas;
+  List<DetailModel> datas;
 
   MainModel({@required this.imgUrl, @required this.name, @required this.datas});
 
@@ -14,8 +15,11 @@ class MainModel {
   }
   factory MainModel.fFrom2({@required Map<String, dynamic> ele}) {
     return MainModel(
-        imgUrl: ele['imgUrl'].toString(),
-        name: ele['name'].toString(),
-        datas: List.from(ele['datas']));
+      imgUrl: ele['imgUrl'].toString(),
+      name: ele['name'].toString(),
+      datas: List.from(ele['datas']).map<DetailModel>((dynamic ele) {
+        return DetailModel.init(e: ele);
+      }).toList(),
+    );
   }
 }
