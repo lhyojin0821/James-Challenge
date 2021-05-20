@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-class TestProvider with ChangeNotifier {
-  int i = 0;
+class Test2Provider with ChangeNotifier {
+  int v = 100;
 
-  void add() {
-    i++;
+  void minus() {
+    v--;
     notifyListeners();
     return;
   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lhj_practice/models/detailModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
 import 'package:lhj_practice/pageTwo.dart';
+import 'package:lhj_practice/providerEx/test2Provider.dart';
+import 'package:lhj_practice/providerEx/test4Provider.dart';
 import 'package:lhj_practice/providerEx/testPage.dart';
 import 'package:lhj_practice/providerEx/testProvider.dart';
 import 'package:provider/provider.dart';
@@ -13,12 +15,19 @@ void main() {
 class MainSys extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // home: MainPage(),
-      home: ChangeNotifierProvider<TestProvider>(
-        create: (BuildContext context) => TestProvider(),
-        child: TestPage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TestProvider>(
+            create: (BuildContext context) => TestProvider()),
+        ChangeNotifierProvider<Test4Provider>(
+            create: (BuildContext context) => Test4Provider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // home: MainPage(),
+        home: ChangeNotifierProvider<Test2Provider>(
+            create: (BuildContext context) => Test2Provider(),
+            child: TestPage()),
       ),
     );
   }
