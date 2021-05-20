@@ -9,14 +9,14 @@ class DetailModel {
   DetailModel(
       {@required this.title,
       @required this.name,
-      @required des,
+      @required this.des,
       @required this.img});
 
-  factory DetailModel.init({@required Map<String, dynamic> e}) {
+  factory DetailModel.init({@required Map<String, dynamic> ele}) {
     return DetailModel(
-        title: e['title'].toString(),
-        name: e['name'].toString(),
-        des: e['des'].toString(),
-        img: e['img'].toString());
+        title: ele['title'].toString(),
+        name: ele['name'].toString(),
+        des: ele['des'].toString(),
+        img: ele['img'].toString());
   }
 }
