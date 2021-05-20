@@ -3,6 +3,8 @@ import 'package:lhj_practice/models/detailModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
 import 'package:lhj_practice/pageTwo.dart';
 import 'package:lhj_practice/providerEx/testPage.dart';
+import 'package:lhj_practice/providerEx/testProvider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MainSys());
@@ -14,7 +16,10 @@ class MainSys extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: MainPage(),
-      home: TestPage(),
+      home: ChangeNotifierProvider<TestProvider>(
+        create: (BuildContext context) => TestProvider(),
+        child: TestPage(),
+      ),
     );
   }
 }

@@ -6,4 +6,9 @@ class TestProvider with ChangeNotifier {
     value++;
     notifyListeners();
   }
+
+  void minus() {
+    value--;
+    notifyListeners();
+  }
 }
