@@ -13,7 +13,7 @@ class PageThird extends StatelessWidget {
         elevation: 0.0,
         actions: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Icon(Icons.arrow_downward),
               Icon(Icons.more_horiz),
@@ -25,7 +25,6 @@ class PageThird extends StatelessWidget {
           children: [
             Text(
               this.model.title,
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
             Text(
               this.model.name,
@@ -39,7 +38,7 @@ class PageThird extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(top: 70.0, bottom: 50.0),
+            margin: EdgeInsets.only(top: 50.0, bottom: 30.0),
             decoration: BoxDecoration(
                 color: Colors.yellow,
                 borderRadius: BorderRadius.circular(50.0),
@@ -49,30 +48,28 @@ class PageThird extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.only(left: 20.0),
+                padding: EdgeInsets.all(20.0),
                 child: Icon(
                   Icons.favorite_border,
                   color: Colors.white,
-                  size: 30.0,
+                  size: 25.0,
                 ),
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(left: 7.0),
                   child: Text(
-                    '86',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    '999',
+                    style: TextStyle(color: Colors.white, fontSize: 18.0),
                   ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(right: 10.0),
-                padding: EdgeInsets.only(right: 10.0),
+                margin: EdgeInsets.only(right: 20.0),
                 child: TextButton(
                   onPressed: () {},
                   child: Text(
                     '유사곡',
-                    style: TextStyle(fontSize: 16.0, color: Colors.white),
+                    style: TextStyle(fontSize: 18.0, color: Colors.white),
                   ),
                 ),
                 decoration: BoxDecoration(
@@ -83,7 +80,7 @@ class PageThird extends StatelessWidget {
             ],
           ),
           Container(
-            padding: EdgeInsets.only(top: 50.0),
+            padding: EdgeInsets.only(top: 30.0),
             child: Center(
               child: Text(
                 this.model.des,
