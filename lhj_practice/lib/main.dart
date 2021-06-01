@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:lhj_practice/models/detailModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
@@ -6,8 +8,10 @@ import 'package:lhj_practice/providerEx/test2Provider.dart';
 import 'package:lhj_practice/providerEx/test4Provider.dart';
 import 'package:lhj_practice/providerEx/testPage.dart';
 import 'package:lhj_practice/providerEx/testProvider.dart';
+import 'package:lhj_practice/repo/connect.dart';
 import 'package:lhj_practice/vData.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(MainSys());
@@ -16,11 +20,9 @@ void main() {
 class MainSys extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MainPage(),
-
     );
   }
 }
@@ -40,11 +42,32 @@ class _MainPageState extends State<MainPage> {
 
   List<MainModel> modelViewData;
 
+  // Future<void> connect() async {
+  //   String url = "http://172.30.1.16:3000/flutter/data/all";
+  //   http.Response res = await http.get(url);
+  //   // print(res.body);
+  //   Map<String, dynamic> result = json.decode(res.body);
+  //   List resultList = result['data'];
+  //   modelViewData = resultList.map<MainModel>((dynamic e) {
+  //     return MainModel.fFrom2(ele: e);
+  //   }).toList();
+  //   if (!mounted) return;
+  //   setState(() {});
+  //   return;
+  // }
+
   @override
   void initState() {
-    this.modelViewData = this.transModel();
-    if (!mounted) return;
-    setState(() {});
+    // this.modelViewData = this.transModel();
+    // if (!mounted) return;
+    // setState(() {});
+    // Future(this.connect);
+    Future(() async {
+      this.modelViewData = await new Connect().connect();
+      if (!mounted) return;
+      setState(() {});
+      return;
+    });
     super.initState();
   }
 
@@ -61,23 +84,27 @@ class _MainPageState extends State<MainPage> {
           ? Center(
               child: Text('로딩중'),
             )
-          : GridView.builder(
-              padding: EdgeInsets.all(10.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 10.0,
-              ),
-              itemCount: this.modelViewData.length,
-              itemBuilder: (BuildContext context, int i) {
-                return _gridTile(
-                    value: i,
-                    context: context,
-                    imgUrl: this.modelViewData[i].imgUrl,
-                    name: this.modelViewData[i].name);
-              },
-              // children: _makeWidgets(),
-            ),
+          : this.modelViewData.isEmpty
+              ? Center(
+                  child: Text('오류가 발생했습니다.'),
+                )
+              : GridView.builder(
+                  padding: EdgeInsets.all(10.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10.0,
+                    crossAxisSpacing: 10.0,
+                  ),
+                  itemCount: this.modelViewData.length,
+                  itemBuilder: (BuildContext context, int i) {
+                    return _gridTile(
+                        value: i,
+                        context: context,
+                        imgUrl: this.modelViewData[i].imgUrl,
+                        name: this.modelViewData[i].name);
+                  },
+                  // children: _makeWidgets(),
+                ),
     );
   }
 

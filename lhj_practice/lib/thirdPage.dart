@@ -33,65 +33,81 @@ class PageThird extends StatelessWidget {
           ],
         ),
       ),
-      body: ListView(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(top: 50.0, bottom: 30.0),
-            decoration: BoxDecoration(
-                color: Colors.yellow,
-                borderRadius: BorderRadius.circular(50.0),
-                image: DecorationImage(
-                    fit: BoxFit.cover, image: NetworkImage(this.model.img))),
-          ),
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.favorite_border,
-                  color: Colors.white,
-                  size: 25.0,
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  child: Text(
-                    '999',
-                    style: TextStyle(color: Colors.white, fontSize: 18.0),
+      body: SingleChildScrollView(
+        child: ListView(
+          primary: false,
+          shrinkWrap: true,
+          children: [
+            this.model.img == ''
+                ? Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.width,
+                    child: Center(
+                      child: Text(
+                        '이미지 준비중',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                    ),
+                  )
+                : Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.only(top: 50.0, bottom: 30.0),
+                    decoration: BoxDecoration(
+                        color: Colors.yellow,
+                        borderRadius: BorderRadius.circular(50.0),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(this.model.img))),
+                  ),
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: Icon(
+                    Icons.favorite_border,
+                    color: Colors.white,
+                    size: 25.0,
                   ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(right: 20.0),
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    '유사곡',
-                    style: TextStyle(fontSize: 18.0, color: Colors.white),
+                Expanded(
+                  child: Container(
+                    child: Text(
+                      '999',
+                      style: TextStyle(color: Colors.white, fontSize: 18.0),
+                    ),
                   ),
                 ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(color: Colors.grey),
+                Container(
+                  margin: EdgeInsets.only(right: 20.0),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      '유사곡',
+                      style: TextStyle(fontSize: 18.0, color: Colors.white),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: Colors.grey),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 30.0),
-            child: Center(
-              child: Text(
-                this.model.des,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.white,
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 30.0),
+              child: Center(
+                child: Text(
+                  this.model.des,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
