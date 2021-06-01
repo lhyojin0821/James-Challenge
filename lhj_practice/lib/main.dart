@@ -16,20 +16,11 @@ void main() {
 class MainSys extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return MultiProvider(
-    //   providers: [
-    //     ChangeNotifierProvider<TestProvider>(
-    //         create: (BuildContext context) => TestProvider()),
-    //     ChangeNotifierProvider<Test4Provider>(
-    //         create: (BuildContext context) => Test4Provider())
-    //   ],
-    // child:
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MainPage(),
-      // home: ChangeNotifierProvider<Test2Provider>(
-      //     create: (BuildContext context) => Test2Provider(),
-      //     child: TestPage()),
+
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:lhj/models/detailModel.dart';
 import 'package:lhj/models/mainModel.dart';
@@ -6,7 +8,10 @@ import 'package:lhj/poviderex/test2Provider.dart';
 import 'package:lhj/poviderex/test4Provider.dart';
 import 'package:lhj/poviderex/testPage.dart';
 import 'package:lhj/poviderex/testProvider.dart';
+import 'package:lhj/repo/connect.dart';
 import 'package:provider/provider.dart';
+// http class 로 묶여있지 않아서 as http 사용
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(new MainSys()); //플러터 실행하는 함수
@@ -32,8 +37,10 @@ class MainSys extends StatelessWidget {
       child: new MaterialApp(
         // home: new MainPage(),
         home: ChangeNotifierProvider<Test2Provider>(
-            create: (BuildContext context) => new Test2Provider(),
-            child: new TestPage()),
+          create: (BuildContext context) => new Test2Provider(),
+          // child: new TestPage()
+          child: MainPage(),
+        ),
       ),
     );
   }
@@ -70,9 +77,22 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    this.modelViewData = this.transModel();
-    if (!mounted) return;
-    setState(() {});
+    // this.modelViewData = this.transModel();
+    // if (!mounted) return;
+    // setState(() {});
+    // Future(this.connect)
+    // .then((_){
+    //   if (!mounted) return;
+    //   setState(() {});
+    //   return;
+    // });
+    //
+    Future(() async {
+      this.modelViewData = await new Connect().connect();
+      if (!mounted) return;
+      setState(() {});
+      return;
+    });
     super.initState();
   }
 
@@ -105,39 +125,43 @@ class _MainPageState extends State<MainPage> {
           ? Center(
               child: Text('로딩중...'),
             )
-          : new GridView.builder(
-              padding: EdgeInsets.all(10.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 10.0,
-              ),
-              // children: [
-              //   this._gridTile(
-              //     imgUrl:
-              //         'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
-              //     name: '홍길동',
-              //   ),
-              //   this._gridTile(
-              //     imgUrl:
-              //         'https://images.unsplash.com/photo-1620238669212-cb4942397110?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-              //     name: '백두산',
-              //   ),
-              //   this._gridTile(
-              //     imgUrl:
-              //         'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
-              //     name: '한라산',
-              //   ),
-              // ],
-              // children: this._makeWidgets(this.data),
-              itemCount: this.modelViewData.length,
-              itemBuilder: (BuildContext context, int i) => this._gridTile(
-                imgUrl: this.modelViewData[i].imgUrl,
-                name: this.modelViewData[i].name,
-                context: context,
-                value: i,
-              ),
-            ),
+          : this.modelViewData.isEmpty
+              ? Center(
+                  child: Text('오류가 발생 했습니다, 고객센터로 연락주세요'),
+                )
+              : new GridView.builder(
+                  padding: EdgeInsets.all(10.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10.0,
+                    crossAxisSpacing: 10.0,
+                  ),
+                  // children: [
+                  //   this._gridTile(
+                  //     imgUrl:
+                  //         'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+                  //     name: '홍길동',
+                  //   ),
+                  //   this._gridTile(
+                  //     imgUrl:
+                  //         'https://images.unsplash.com/photo-1620238669212-cb4942397110?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+                  //     name: '백두산',
+                  //   ),
+                  //   this._gridTile(
+                  //     imgUrl:
+                  //         'https://images.unsplash.com/photo-1593642532454-e138e28a63f4?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+                  //     name: '한라산',
+                  //   ),
+                  // ],
+                  // children: this._makeWidgets(this.data),
+                  itemCount: this.modelViewData.length,
+                  itemBuilder: (BuildContext context, int i) => this._gridTile(
+                    imgUrl: this.modelViewData[i].imgUrl,
+                    name: this.modelViewData[i].name,
+                    context: context,
+                    value: i,
+                  ),
+                ),
     );
   }
 
