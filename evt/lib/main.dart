@@ -1,6 +1,4 @@
 import 'package:evt/evtProvider/evt1Provider.dart';
-import 'package:evt/evtProvider/evt2Provider.dart';
-import 'package:evt/evtProvider/evt3Provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,17 +7,9 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<Evt1Provider>(
-            create: (BuildContext context) => Evt1Provider()),
-        ChangeNotifierProvider<Evt2Provider>(
-            create: (BuildContext context) => Evt2Provider()),
-        ChangeNotifierProvider<Evt3Provider>(
-            create: (BuildContext context) => Evt3Provider()),
-      ],
-      child: MaterialApp(home: PageWidget()),
-    );
+    return ChangeNotifierProvider<Evt1Provider>(
+        create: (BuildContext context) => Evt1Provider(),
+        child: MaterialApp(home: PageWidget()));
   }
 }
 
@@ -89,7 +79,7 @@ class FirWidget extends StatelessWidget {
     return TextButton(
         child: Text("FirWidget"),
         onPressed: () {
-          provider1.add();
+          provider1.addI();
         });
   }
 }
@@ -111,13 +101,13 @@ class BackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Evt2Provider provider2 = Provider.of<Evt2Provider>(context);
+    Evt1Provider provider1 = Provider.of<Evt1Provider>(context);
     return Container(
         child: Column(children: [
       Container(
           padding: EdgeInsets.all(10.0),
           decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-          child: Text("BackWidget : ${provider2.i}")),
+          child: Text("BackWidget : ${provider1.v}")),
       Container(padding: EdgeInsets.only(left: 20.0), child: child)
     ]));
   }
@@ -126,11 +116,11 @@ class BackWidget extends StatelessWidget {
 class FrontWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Evt2Provider provider2 = Provider.of<Evt2Provider>(context);
+    Evt1Provider provider1 = Provider.of<Evt1Provider>(context);
     return TextButton(
         child: Text("FrontWidget"),
         onPressed: () {
-          provider2.add();
+          provider1.addV();
         });
   }
 }
@@ -141,13 +131,13 @@ class NomalWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Evt3Provider provider3 = Provider.of<Evt3Provider>(context);
+    Evt1Provider provider1 = Provider.of<Evt1Provider>(context);
     return Container(
         child: Column(children: [
       TextButton(
           child: Text("NomalWidget"),
           onPressed: () {
-            provider3.add();
+            provider1.addA();
           }),
       Container(padding: EdgeInsets.only(left: 20.0), child: child)
     ]));
@@ -157,10 +147,10 @@ class NomalWidget extends StatelessWidget {
 class ReverseWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Evt3Provider provider3 = Provider.of<Evt3Provider>(context);
+    Evt1Provider provider1 = Provider.of<Evt1Provider>(context);
     return Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-        child: Text("ReverseWidget : ${provider3.i}"));
+        child: Text("ReverseWidget : ${provider1.a}"));
   }
 }
