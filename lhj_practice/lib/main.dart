@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:lhj_practice/models/detailModel.dart';
+import 'package:lhj_practice/models/mainConnectModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
 import 'package:lhj_practice/pageTwo.dart';
 import 'package:lhj_practice/providerEx/test2Provider.dart';
 import 'package:lhj_practice/providerEx/test4Provider.dart';
 import 'package:lhj_practice/providerEx/testPage.dart';
 import 'package:lhj_practice/providerEx/testProvider.dart';
+import 'package:lhj_practice/providers/mainProvider.dart';
 import 'package:lhj_practice/repo/connect.dart';
 import 'package:lhj_practice/vData.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +22,27 @@ void main() {
 class MainSys extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainPage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TestProvider>(
+            create: (BuildContext context) => new TestProvider()),
+        ChangeNotifierProvider<Test4Provider>(
+            create: (BuildContext context) => new Test4Provider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<Test2Provider>(
+              create: (BuildContext context) => new Test2Provider(),
+              // child: new TestPage()
+            ),
+            ChangeNotifierProvider<MainProvider>(
+                create: (_) => new MainProvider())
+          ],
+          child: MainPage2(),
+        ),
+      ),
     );
   }
 }
@@ -63,7 +83,7 @@ class _MainPageState extends State<MainPage> {
     // setState(() {});
     // Future(this.connect);
     Future(() async {
-      this.modelViewData = await new Connect().connect();
+      // this.modelViewData = await new Connect().connect();
       if (!mounted) return;
       setState(() {});
       return;
@@ -210,5 +230,46 @@ class _MainPageState extends State<MainPage> {
         ),
       ],
     );
+  }
+}
+
+class MainPage2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    MainConnectModel data = Provider.of<MainProvider>(context).model;
+
+    return Scaffold(
+      appBar: AppBar(),
+      body: _netCheck(data),
+    );
+  }
+
+  Widget _netCheck(MainConnectModel data) {
+    if (data == null) return Scaffold();
+    if (data.netCheck == NetCheck.Error)
+      return Scaffold(
+        body: Center(
+          child: Text('고객센터로..'),
+        ),
+      );
+    if (data.netCheck == NetCheck.TimeOut)
+      return Scaffold(
+        body: Center(
+          child: Text('새로고침..'),
+        ),
+      );
+    if (data.netCheck == NetCheck.ServerError)
+      return Scaffold(
+        body: Center(
+          child: Text('서버문제 고객센터로..'),
+        ),
+      );
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, mainAxisSpacing: 10.0, crossAxisSpacing: 10.0),
+        itemCount: data.mainModels.length,
+        itemBuilder: (BuildContext context, int i) => Container(
+              child: Text(data.mainModels[i].name),
+            ));
   }
 }

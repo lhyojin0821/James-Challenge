@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:lhj/models/detailModel.dart';
+import 'package:lhj/models/mainConnectModel.dart';
 import 'package:lhj/models/mainModel.dart';
 import 'package:lhj/pageTwo.dart';
 import 'package:lhj/poviderex/test2Provider.dart';
 import 'package:lhj/poviderex/test4Provider.dart';
 import 'package:lhj/poviderex/testPage.dart';
 import 'package:lhj/poviderex/testProvider.dart';
+import 'package:lhj/provides/mainProvider.dart';
 import 'package:lhj/repo/connect.dart';
 import 'package:provider/provider.dart';
 // http class 로 묶여있지 않아서 as http 사용
@@ -36,10 +38,15 @@ class MainSys extends StatelessWidget {
       ],
       child: new MaterialApp(
         // home: new MainPage(),
-        home: ChangeNotifierProvider<Test2Provider>(
-          create: (BuildContext context) => new Test2Provider(),
-          // child: new TestPage()
-          child: MainPage(),
+        home: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<Test2Provider>(
+              create: (BuildContext context) => new Test2Provider(),
+              // child: new TestPage()
+            ),
+            ChangeNotifierProvider<MainProvider>(create: (_) => MainProvider())
+          ],
+          child: MainPage2(),
         ),
       ),
     );
@@ -87,8 +94,12 @@ class _MainPageState extends State<MainPage> {
     //   return;
     // });
     //
+
+    // MVC/P(모델,뷰,컨트롤러) 개발, 패턴 -> 개발을 패턴화
+    // - 장점) 개발이 빠르다 / 개발 집중도가 올라가기 때문
+    // - 단점) 느리다(객체지향의 문제)
     Future(() async {
-      this.modelViewData = await new Connect().connect();
+      // this.modelViewData = await new Connect().connect();
       if (!mounted) return;
       setState(() {});
       return;
@@ -351,4 +362,47 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       );
+}
+
+class MainPage2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // provider
+    MainConnectModel data = Provider.of<MainProvider>(context).model;
+
+    return Scaffold(
+      appBar: AppBar(),
+      body: _netCheck(data),
+    );
+  }
+}
+
+// @@ TODO : 8일 Widget Class 로 분리
+Widget _netCheck(MainConnectModel data) {
+  if (data == null)
+    return Center(
+      child: Text('로딩중..'),
+    );
+  if (data.netCheck == NetCheck.Error)
+    return Center(
+      child: Text('고객센터로..'),
+    );
+  if (data.netCheck == NetCheck.TimeOut)
+    return Center(
+      child: Text('새로고침..'),
+    );
+  if (data.netCheck == NetCheck.ServerError)
+    return Center(
+      child: Text('서버문제 고객센터로..'),
+    );
+  return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 10.0,
+      ),
+      itemCount: data.mainModels.length,
+      itemBuilder: (BuildContext context, int i) => Container(
+            child: Text(data.mainModels[i].name),
+          ));
 }
