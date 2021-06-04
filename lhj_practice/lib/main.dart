@@ -40,7 +40,7 @@ class MainSys extends StatelessWidget {
             ChangeNotifierProvider<MainProvider>(
                 create: (_) => new MainProvider())
           ],
-          child: MainPage2(),
+          child: MainPage(),
         ),
       ),
     );
@@ -78,7 +78,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    // this.modelViewData = this.transModel();
+    this.modelViewData = this.transModel();
     // if (!mounted) return;
     // setState(() {});
     // Future(this.connect);
@@ -240,36 +240,48 @@ class MainPage2 extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      body: _netCheck(data),
+      body: NetCheck(data: data),
     );
   }
+}
 
-  Widget _netCheck(MainConnectModel data) {
-    if (data == null) return Scaffold();
-    if (data.netCheck == NetCheck.Error)
-      return Scaffold(
-        body: Center(
-          child: Text('고객센터로..'),
-        ),
+class NetCheck extends StatelessWidget {
+  MainConnectModel data;
+
+  NetCheck({@required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    if (data == null)
+      return Center(
+        child: Text('로딩중...'),
       );
-    if (data.netCheck == NetCheck.TimeOut)
-      return Scaffold(
-        body: Center(
-          child: Text('새로고침..'),
-        ),
+
+    if (data.netCheck == NetChecks.Error)
+      return Center(
+        child: Text('고객센터로...'),
       );
-    if (data.netCheck == NetCheck.ServerError)
-      return Scaffold(
-        body: Center(
-          child: Text('서버문제 고객센터로..'),
-        ),
+    if (data.netCheck == NetChecks.TimeOut)
+      return Center(
+        child: Text('새로고침...'),
+      );
+    if (data.netCheck == NetChecks.ServerError)
+      return Center(
+        child: Text('서버문제 고객센터로...'),
       );
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, mainAxisSpacing: 10.0, crossAxisSpacing: 10.0),
+          crossAxisCount: 2,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+        ),
         itemCount: data.mainModels.length,
-        itemBuilder: (BuildContext context, int i) => Container(
+        itemBuilder: (BuildContext context, int i) {
+          return Container(
+            child: Center(
               child: Text(data.mainModels[i].name),
-            ));
+            ),
+          );
+        });
   }
 }

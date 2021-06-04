@@ -13,25 +13,26 @@ class Connect {
           onTimeout: () async => new http.Response('{}', 404));
 
       if (res.statusCode == 404) {
-        return new MainConnectModel(netCheck: NetCheck.TimeOut, mainModels: []);
+        return new MainConnectModel(
+            netCheck: NetChecks.TimeOut, mainModels: []);
       }
       // print(res.body);
       Map<String, dynamic> result = json.decode(res.body);
       List resultList = result['data'];
       if (resultList == null) {
         return new MainConnectModel(
-          netCheck: NetCheck.ServerError,
+          netCheck: NetChecks.ServerError,
           mainModels: [],
         );
       }
       return new MainConnectModel(
-          netCheck: NetCheck.Ok,
+          netCheck: NetChecks.Ok,
           mainModels: resultList
               .map<MainModel>(
                 (dynamic e) => MainModel.fFrom2(ele: e),
               )
               .toList());
     } catch (e) {}
-    return new MainConnectModel(netCheck: NetCheck.Error, mainModels: []);
+    return new MainConnectModel(netCheck: NetChecks.Error, mainModels: []);
   }
 }

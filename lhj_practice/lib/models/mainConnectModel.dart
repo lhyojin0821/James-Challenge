@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:lhj_practice/models/mainModel.dart';
 
-enum NetCheck {
+enum NetChecks {
   Ok,
   Error,
   TimeOut,
@@ -9,7 +9,7 @@ enum NetCheck {
 }
 
 class MainConnectModel {
-  NetCheck netCheck;
+  NetChecks netCheck;
   List<MainModel> mainModels;
 
   MainConnectModel({@required this.netCheck, @required this.mainModels});
