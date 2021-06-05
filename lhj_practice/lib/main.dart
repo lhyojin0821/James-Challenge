@@ -236,22 +236,17 @@ class _MainPageState extends State<MainPage> {
 class MainPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    MainConnectModel data = Provider.of<MainProvider>(context).model;
-
     return Scaffold(
       appBar: AppBar(),
-      body: NetCheck(data: data),
+      body: NetCheck(),
     );
   }
 }
 
 class NetCheck extends StatelessWidget {
-  MainConnectModel data;
-
-  NetCheck({@required this.data});
-
   @override
   Widget build(BuildContext context) {
+    MainConnectModel data = Provider.of<MainProvider>(context).model;
     if (data == null)
       return Center(
         child: Text('로딩중...'),
