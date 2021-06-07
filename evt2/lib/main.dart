@@ -10,6 +10,24 @@ void main() {
 }
 
 class MainPage extends StatelessWidget {
+  // -------------- 1 -----------------
+  // List<MainModel> models() {
+  //   List<MainModel> result = this.data.map<MainModel>((Map<String, dynamic> e) {
+  //     return MainModel(
+  //         title: e['title'].toString(),
+  //         datas: List.from(e['datas']),
+  //         isCheck: e['isCheck'] ?? false);
+  //   }).toList();
+  //   return result;
+  // }
+  // -------------- 2 -----------------
+  // List<MainModel> models() {
+  //   List<MainModel> result = this.data.map<MainModel>((Map<String, dynamic> e) {
+  //     return MainModel.from(ele: e);
+  //   }).toList();
+  //   return result;
+  // }
+  // -------------- 3 -----------------
   List<MainModel> models() {
     List<MainModel> result = this.data.map<MainModel>((Map<String, dynamic> e) {
       return MainModel.init(ele: e);
@@ -34,7 +52,7 @@ class MainPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text('title:${this.modelViewData[i].title}'),
-                  Text('isCheck:${this.modelViewData[i].isCheck.toString()}'),
+                  Text('isCheck:${this.modelViewData[i].isCheck}'),
                   Text('datas:${this.modelViewData[i].datas}'),
                 ],
               ),
