@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lhj_practice/loginPage.dart';
 import 'package:lhj_practice/models/detailModel.dart';
 import 'package:lhj_practice/models/mainConnectModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
@@ -40,7 +41,7 @@ class MainSys extends StatelessWidget {
             ChangeNotifierProvider<MainProvider>(
                 create: (_) => new MainProvider())
           ],
-          child: MainPage(),
+          child: LoginPage(),
         ),
       ),
     );
@@ -236,22 +237,18 @@ class _MainPageState extends State<MainPage> {
 class MainPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    MainConnectModel data = Provider.of<MainProvider>(context).model;
     return Scaffold(
       appBar: AppBar(),
-      body: NetCheck(),
+      body: _netCheck(data),
     );
   }
-}
 
-class NetCheck extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    MainConnectModel data = Provider.of<MainProvider>(context).model;
+  Widget _netCheck(MainConnectModel data) {
     if (data == null)
       return Center(
         child: Text('로딩중...'),
       );
-
     if (data.netCheck == NetChecks.Error)
       return Center(
         child: Text('고객센터로...'),
@@ -272,11 +269,38 @@ class NetCheck extends StatelessWidget {
         ),
         itemCount: data.mainModels.length,
         itemBuilder: (BuildContext context, int i) {
-          return Container(
-            child: Center(
-              child: Text(data.mainModels[i].name),
-            ),
-          );
+          return Items(data.mainModels[i].name);
         });
+  }
+}
+
+class Items extends StatefulWidget {
+  String data;
+  Items(this.data);
+
+  @override
+  _ItemsState createState() => _ItemsState();
+}
+
+class _ItemsState extends State<Items> {
+  bool check = false;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: Column(
+          children: [
+            Text(widget.data),
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    this.check = !this.check;
+                  });
+                },
+                icon: Icon(this.check ? Icons.favorite : Icons.favorite_border))
+          ],
+        ),
+      ),
+    );
   }
 }

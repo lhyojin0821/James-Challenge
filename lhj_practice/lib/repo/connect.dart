@@ -6,9 +6,10 @@ import 'package:lhj_practice/models/mainConnectModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
 
 class Connect {
+  final String END_POINT = 'http://172.30.1.38:3000';
   Future<MainConnectModel> connect() async {
     try {
-      String url = "http://172.30.1.16:3000/flutter/data/all";
+      String url = "$END_POINT/flutter/data/all";
       http.Response res = await http.get(url).timeout(Duration(seconds: 8),
           onTimeout: () async => new http.Response('{}', 404));
 
@@ -34,5 +35,13 @@ class Connect {
               .toList());
     } catch (e) {}
     return new MainConnectModel(netCheck: NetChecks.Error, mainModels: []);
+  }
+
+  Future<void> loginConnect({@required String id, @required String pw}) async {
+    http.Response res = await http.post(this.END_POINT + '/flutter/login',
+        headers: {'content-type': 'application/json'},
+        body: json.encode({'id': id, 'pw': pw}));
+    print(res.body);
+    return;
   }
 }

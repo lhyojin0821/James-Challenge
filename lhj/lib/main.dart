@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lhj/loginPage.dart';
 import 'package:lhj/models/detailModel.dart';
 import 'package:lhj/models/mainConnectModel.dart';
 import 'package:lhj/models/mainModel.dart';
@@ -46,7 +47,7 @@ class MainSys extends StatelessWidget {
             ),
             ChangeNotifierProvider<MainProvider>(create: (_) => MainProvider())
           ],
-          child: MainPage2(),
+          child: LoginPage(),
         ),
       ),
     );
@@ -375,34 +376,74 @@ class MainPage2 extends StatelessWidget {
       body: _netCheck(data),
     );
   }
+
+// bool ch1 = false;
+// bool ch2 = false;
+// bool ch2 = false;
+
+  Widget _netCheck(MainConnectModel data) {
+    if (data == null)
+      return Center(
+        child: Text('로딩중..'),
+      );
+    if (data.netCheck == NetCheck.Error)
+      return Center(
+        child: Text('고객센터로..'),
+      );
+    if (data.netCheck == NetCheck.TimeOut)
+      return Center(
+        child: Text('새로고침..'),
+      );
+    if (data.netCheck == NetCheck.ServerError)
+      return Center(
+        child: Text('서버문제 고객센터로..'),
+      );
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+        ),
+        itemCount: data.mainModels.length,
+        // new Items(data, index) 방식은 의존이 너무 높다
+        itemBuilder: (BuildContext context, int i) =>
+            new Items(data.mainModels[i].name));
+  }
+}
+// class Widget 으로 분리하는 경우
+// 1. 각각의 상태변수를 들고있어야하는지
+// 2. 다른 class 에서도 사용하는지
+
+// * 이후에는 파일로 분리
+class Items extends StatefulWidget {
+  String data;
+  Items(this.data);
+
+  @override
+  _ItemsState createState() => _ItemsState();
 }
 
-// @@ TODO : 8일 Widget Class 로 분리
-Widget _netCheck(MainConnectModel data) {
-  if (data == null)
-    return Center(
-      child: Text('로딩중..'),
-    );
-  if (data.netCheck == NetCheck.Error)
-    return Center(
-      child: Text('고객센터로..'),
-    );
-  if (data.netCheck == NetCheck.TimeOut)
-    return Center(
-      child: Text('새로고침..'),
-    );
-  if (data.netCheck == NetCheck.ServerError)
-    return Center(
-      child: Text('서버문제 고객센터로..'),
-    );
-  return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10.0,
-        mainAxisSpacing: 10.0,
+class _ItemsState extends State<Items> {
+  bool check = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          // Text(data.mainModels[i].name),
+          // -> MainDataModel 이외도 받아서 쓸수있도록
+          Text(widget.data),
+          IconButton(
+              onPressed: () {
+                print(widget.data);
+                setState(() {
+                  this.check = !this.check;
+                });
+              },
+              icon: Icon(this.check ? Icons.favorite : Icons.favorite_border))
+        ],
       ),
-      itemCount: data.mainModels.length,
-      itemBuilder: (BuildContext context, int i) => Container(
-            child: Text(data.mainModels[i].name),
-          ));
+    );
+  }
 }

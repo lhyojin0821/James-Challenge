@@ -5,6 +5,7 @@ import 'package:lhj/models/mainConnectModel.dart';
 import 'package:lhj/models/mainModel.dart';
 
 class Connect {
+  final String END_POINT = 'http://192.168.0.15:3000';
   Future<MainConnectModel> connect() async {
     /// [ error - 예외 처리 ]
     /// 1. 연결 오류 - 서버 종료 되어있다면, 서버주소가 바뀐다면 : try&catch
@@ -12,8 +13,7 @@ class Connect {
     /// 3. 데이터 오류
     // ipv6
     try {
-      String url =
-          "http://192.168.0.15:3000/flutter/data/all"; // 127.0.0.1 == localhost
+      String url = "$END_POINT/flutter/data/all"; // 127.0.0.1 == localhost
       http.Response res = await http.get(url).timeout(Duration(seconds: 8),
           onTimeout: () async => new http.Response('{}', 404)); //200 302
 
@@ -37,5 +37,15 @@ class Connect {
               .toList());
     } catch (e) {}
     return new MainConnectModel(netCheck: NetCheck.Error, mainModels: []);
+  }
+
+  Future<void> loginConnect({@required String id, @required String pw}) async {
+    http.Response res = await http.post(this.END_POINT + '/flutter/login',
+        headers: {"Content-type": "application/json"},
+        body: json.encode({"id": id, "pw": pw}) // => '{"id":"dd", "pw":"pwpw"}'
+        );
+
+    print(res.body);
+    return;
   }
 }

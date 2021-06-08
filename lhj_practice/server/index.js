@@ -2,19 +2,20 @@ var express = require('express');
 var app = express();
 app.listen(3000);
 
-app.get('/', (req, res)=> res.json('Hi'));
+app.use(express.json());
+app.get('/', (req, res) => res.json('Hi'));
 
-app.get('/flutter/data/all', (req, res)=>{
-    var datas = [
+app.get('/flutter/data/all', (req, res) => {
+  var datas = [
+    {
+      'imgUrl':
+        'https://images.unsplash.com/photo-1593642532744-d377ab507dc8?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': '발라드',
+      'datas': [
         {
-          'imgUrl':
-              'https://images.unsplash.com/photo-1593642532744-d377ab507dc8?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-          'name': '발라드',
-          'datas': [
-            {
-              'title': '너를 만나',
-              'name': '폴킴',
-              'des': `    
+          'title': '너를 만나',
+          'name': '폴킴',
+          'des': `    
                 너를 만난 그 이후로 사소한 변화들에 
                 행복해져 눈이 부시게 빛 나는 아침
                 너를 떠올리며 눈 뜨는 하루 식탁 위에 마주 앉아
@@ -55,35 +56,43 @@ app.get('/flutter/data/all', (req, res)=>{
                 날 잡아줘서 힘이 돼줘서
                 소중한 배려로 날 안아줘서
                 너를 만나`,
-              'img': 'https://image.bugsm.co.kr/album/images/500/202037/20203701.jpg'
-            },
-            {'title': '발라드노래2', 'name': '발라드가수2', 'des': '가사2', 'img': ''},
-          ],
+          'img': 'https://image.bugsm.co.kr/album/images/500/202037/20203701.jpg'
         },
+        { 'title': '발라드노래2', 'name': '발라드가수2', 'des': '가사2', 'img': '' },
+      ],
+    },
+    {
+      'imgUrl':
+        'https://images.unsplash.com/photo-1621447578058-6543ad48e6b2?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': '댄스',
+      'datas': [
         {
-          'imgUrl':
-              'https://images.unsplash.com/photo-1621447578058-6543ad48e6b2?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-          'name': '댄스',
-          'datas': [
-            {
-              'title': '댄스노래1',
-              'name': '댄스가수1',
-              'des': '가사1',
-              'img':
-                  'https://images.unsplash.com/photo-1621447578058-6543ad48e6b2?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
-            },
-            {'title': '댄스노래2', 'name': '댄스가수2', 'des': '가사2', 'img': ''},
-          ],
+          'title': '댄스노래1',
+          'name': '댄스가수1',
+          'des': '가사1',
+          'img':
+            'https://images.unsplash.com/photo-1621447578058-6543ad48e6b2?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
         },
-        {
-          'imgUrl':
-              'https://images.unsplash.com/photo-1621447578191-3869acfdfd6a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-          'name': '힙합',
-          'datas': [
-            {'title': '힙합노래1', 'name': '힙합가수1', 'des': '가사1', 'img': ''},
-            {'title': '힙합노래2', 'name': '힙합가수2', 'des': '가사2', 'img': ''},
-          ],
-        },
-      ];
-res.json({data:datas});
+        { 'title': '댄스노래2', 'name': '댄스가수2', 'des': '가사2', 'img': '' },
+      ],
+    },
+    {
+      'imgUrl':
+        'https://images.unsplash.com/photo-1621447578191-3869acfdfd6a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+      'name': '힙합',
+      'datas': [
+        { 'title': '힙합노래1', 'name': '힙합가수1', 'des': '가사1', 'img': '' },
+        { 'title': '힙합노래2', 'name': '힙합가수2', 'des': '가사2', 'img': '' },
+      ],
+    },
+  ];
+  res.json({ data: datas });
+});
+app.post('/flutter/login', (req, res) => {
+  console.log(req.headers);
+  var id = req.body.id;
+  var pw = req.body.pw;
+  console.log(`id:${id} / pw:${pw}`);
+  res.json(true);
+
 });
