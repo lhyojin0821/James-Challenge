@@ -53,7 +53,8 @@ class MainPage extends StatelessWidget {
                 children: [
                   Text('title:${this.modelViewData[i].title}'),
                   Text('isCheck:${this.modelViewData[i].isCheck}'),
-                  Text('datas:${this.modelViewData[i].datas}'),
+                  Text(
+                      'datas:${this.modelViewData[2].datas[0].datas[0].isCheck}'),
                 ],
               ),
             );

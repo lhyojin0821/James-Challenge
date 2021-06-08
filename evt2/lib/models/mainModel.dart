@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class MainModel {
   String title;
-  List datas;
+  List<MainModel> datas;
   bool isCheck;
 
   MainModel(
@@ -18,6 +18,8 @@ class MainModel {
     return MainModel(
         title: ele['title'].toString(),
         isCheck: ele['isCheck'] ?? false,
-        datas: List.from(ele['datas']));
+        datas: List.from(ele['datas']).map<MainModel>((dynamic e) {
+          return MainModel.init(ele: e);
+        }).toList());
   }
 }

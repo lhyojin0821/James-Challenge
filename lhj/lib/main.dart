@@ -436,7 +436,6 @@ class _ItemsState extends State<Items> {
           Text(widget.data),
           IconButton(
               onPressed: () {
-                print(widget.data);
                 setState(() {
                   this.check = !this.check;
                 });
