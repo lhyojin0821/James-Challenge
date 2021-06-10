@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lhj_practice/main.dart';
+import 'package:lhj_practice/providers/loginCheckProvider.dart';
 import 'package:lhj_practice/repo/connect.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController pwCt = new TextEditingController();
 
   Connect connect = new Connect();
+
   @override
   void dispose() {
     idCt?.dispose();
@@ -21,8 +25,12 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  LoginCheckProvider loginCheckProvider;
   @override
   Widget build(BuildContext context) {
+    if (this.loginCheckProvider == null) {
+      this.loginCheckProvider = Provider.of<LoginCheckProvider>(context);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
@@ -76,8 +84,24 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     print('id: ${this.idCt.text}');
                     print('id: ${this.pwCt.text}');
-                    await connect.loginConnect(
+                    bool loginCheck = await connect.loginConnect(
                         id: this.idCt.text, pw: this.pwCt.text);
+                    if (!loginCheck) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('ID 와 password 를 확인 해주세요.'),
+                          );
+                        },
+                      );
+                      return;
+                    }
+                    await this.loginCheckProvider.setCheck(loginCheck);
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return MainPage2();
+                    }));
                   },
                   child: Text('Login'))
             ],

@@ -12,6 +12,8 @@ class MainProvider with ChangeNotifier {
   // --> 더 다양한 내용으로 값을 체크 해야 함
 
   //초기화
+  //@TODO : 15일, 생성자 함수 외 부분에서 init 함수를 실행 할 수 있는 방법이 있는지
+  // -> private 는 지워도 상관없음
   MainProvider() {
     Future(this._init);
   }

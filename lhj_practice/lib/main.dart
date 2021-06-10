@@ -10,6 +10,7 @@ import 'package:lhj_practice/providerEx/test2Provider.dart';
 import 'package:lhj_practice/providerEx/test4Provider.dart';
 import 'package:lhj_practice/providerEx/testPage.dart';
 import 'package:lhj_practice/providerEx/testProvider.dart';
+import 'package:lhj_practice/providers/loginCheckProvider.dart';
 import 'package:lhj_practice/providers/mainProvider.dart';
 import 'package:lhj_practice/repo/connect.dart';
 import 'package:lhj_practice/vData.dart';
@@ -25,10 +26,14 @@ class MainSys extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<LoginCheckProvider>(
+            create: (BuildContext context) => new LoginCheckProvider()),
         ChangeNotifierProvider<TestProvider>(
             create: (BuildContext context) => new TestProvider()),
         ChangeNotifierProvider<Test4Provider>(
             create: (BuildContext context) => new Test4Provider()),
+        ChangeNotifierProvider<MainProvider>(
+            create: (BuildContext context) => new MainProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -41,10 +46,25 @@ class MainSys extends StatelessWidget {
             ChangeNotifierProvider<MainProvider>(
                 create: (_) => new MainProvider())
           ],
-          child: LoginPage(),
+          child: LoginCheck(),
         ),
       ),
     );
+  }
+}
+
+class LoginCheck extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    LoginCheckProvider provider = Provider.of<LoginCheckProvider>(context);
+    if (provider.check == null)
+      return Scaffold(
+        body: Center(
+          child: Text('Load....'),
+        ),
+      );
+    if (!provider.check) return LoginPage();
+    return MainPage2();
   }
 }
 
@@ -238,8 +258,18 @@ class MainPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MainConnectModel data = Provider.of<MainProvider>(context).model;
+    LoginCheckProvider loginCheckProvider =
+        Provider.of<LoginCheckProvider>(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await loginCheckProvider.setCheck(false);
+              },
+              icon: Icon(Icons.logout))
+        ],
+      ),
       body: _netCheck(data),
     );
   }

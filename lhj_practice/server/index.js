@@ -93,6 +93,12 @@ app.post('/flutter/login', (req, res) => {
   var id = req.body.id;
   var pw = req.body.pw;
   console.log(`id:${id} / pw:${pw}`);
-  res.json(true);
+  if (id === 'abc' && pw === 'a123') {
+    return res.json(true);
+  } else {
+    return res.json(false);
+  }
+
+
 
 });

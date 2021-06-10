@@ -10,6 +10,7 @@ import 'package:lhj/poviderex/test2Provider.dart';
 import 'package:lhj/poviderex/test4Provider.dart';
 import 'package:lhj/poviderex/testPage.dart';
 import 'package:lhj/poviderex/testProvider.dart';
+import 'package:lhj/provides/loginCheckProvider.dart';
 import 'package:lhj/provides/mainProvider.dart';
 import 'package:lhj/repo/connect.dart';
 import 'package:provider/provider.dart';
@@ -26,16 +27,22 @@ void main() {
 // --> GetX, MobX ...
 // --> context 에 의존해서 상태관리
 
+// '{key : value}'
+
 // -System 단위 1개만
 class MainSys extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<LoginCheckProvider>(
+            create: (BuildContext context) => new LoginCheckProvider()),
         ChangeNotifierProvider<TestProvider>(
             create: (BuildContext context) => new TestProvider()),
         ChangeNotifierProvider<Test4Provider>(
             create: (BuildContext context) => new Test4Provider()),
+        ChangeNotifierProvider<MainProvider>(
+            create: (BuildContext context) => new MainProvider()),
       ],
       child: new MaterialApp(
         // home: new MainPage(),
@@ -47,10 +54,25 @@ class MainSys extends StatelessWidget {
             ),
             ChangeNotifierProvider<MainProvider>(create: (_) => MainProvider())
           ],
-          child: LoginPage(),
+          child: LoginCheck(),
         ),
       ),
     );
+  }
+}
+
+class LoginCheck extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    LoginCheckProvider provider = Provider.of<LoginCheckProvider>(context);
+    if (provider.check == null)
+      return Scaffold(
+        body: Center(
+          child: Text('Load....'),
+        ),
+      );
+    if (!provider.check) return LoginPage();
+    return MainPage2();
   }
 }
 
@@ -370,9 +392,18 @@ class MainPage2 extends StatelessWidget {
   Widget build(BuildContext context) {
     // provider
     MainConnectModel data = Provider.of<MainProvider>(context).model;
-
+    LoginCheckProvider loginCheckProvider =
+        Provider.of<LoginCheckProvider>(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await loginCheckProvider.setCheck(false);
+              },
+              icon: Icon(Icons.logout)),
+        ],
+      ),
       body: _netCheck(data),
     );
   }

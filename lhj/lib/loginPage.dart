@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lhj/main.dart';
+import 'package:lhj/provides/loginCheckProvider.dart';
+import 'package:lhj/provides/loginCheckProvider.dart';
+import 'package:lhj/provides/loginCheckProvider.dart';
 import 'package:lhj/repo/connect.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -21,8 +26,13 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  LoginCheckProvider loginCheckProvider;
+
   @override
   Widget build(BuildContext context) {
+    if (this.loginCheckProvider == null) {
+      this.loginCheckProvider = Provider.of<LoginCheckProvider>(context);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
@@ -78,9 +88,23 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     print("id: ${this.idCt.text}");
                     print("pw: ${this.pwCt.text}");
-                    await this
+                    bool loginCheck = await this
                         .connect
                         .loginConnect(id: this.idCt.text, pw: this.pwCt.text);
+                    if (!loginCheck) {
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: Text('ID 와 password 를 확인 해주세요'),
+                        ),
+                      );
+                      return;
+                    }
+                    await this.loginCheckProvider.setCheck(loginCheck);
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return MainPage2();
+                    }));
                   },
                   child: Text('login'))
             ],

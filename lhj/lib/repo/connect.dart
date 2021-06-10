@@ -39,13 +39,13 @@ class Connect {
     return new MainConnectModel(netCheck: NetCheck.Error, mainModels: []);
   }
 
-  Future<void> loginConnect({@required String id, @required String pw}) async {
+  Future<bool> loginConnect({@required String id, @required String pw}) async {
     http.Response res = await http.post(this.END_POINT + '/flutter/login',
         headers: {"Content-type": "application/json"},
         body: json.encode({"id": id, "pw": pw}) // => '{"id":"dd", "pw":"pwpw"}'
         );
 
-    print(res.body);
-    return;
+    bool check = json.decode(res.body);
+    return check;
   }
 }
