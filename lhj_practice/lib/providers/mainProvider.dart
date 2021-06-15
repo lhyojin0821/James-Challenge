@@ -7,11 +7,13 @@ class MainProvider with ChangeNotifier {
   MainConnectModel model;
 
   MainProvider() {
-    Future(this._init);
+    Future(this.init);
   }
 
-  Future<void> _init() async {
+  Future<void> init() async {
     this.model = await new Connect().connect();
+    await new Connect().airTableConnect();
+    await new Connect().airTableCreate();
     notifyListeners();
     return;
   }

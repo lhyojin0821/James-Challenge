@@ -48,4 +48,38 @@ class Connect {
     bool check = json.decode(res.body);
     return check;
   }
+
+  Future<void> airTableConnect() async {
+    http.Response res = await http.get(
+        "https://api.airtable.com/v0/app1X6OfXdB6tWJsL/Table%201?maxRecords=3&view=Grid%20view",
+        headers: {"Authorization": "Bearer keyLR7h4aI22IPrVZ"});
+    print(res.body);
+    return;
+  }
+
+  Future<void> airTableCreate() async {
+    http.Response res = await http.post(
+        'https://api.airtable.com/v0/app1X6OfXdB6tWJsL/Table%201',
+        headers: {
+          "Authorization": "Bearer keyLR7h4aI22IPrVZ",
+          "Content-Type": "application/json"
+        },
+        body: '''{
+  "records": [
+    {
+      "fields": {
+        "Name": "test3",
+        "Notes": "testtestsdf"
+      }
+    },
+    {
+      "fields": {
+        "Name": "test4",
+        "Notes": "testtestsdf"
+      }
+    }
+  ]
+}''');
+    print(res.body);
+  }
 }

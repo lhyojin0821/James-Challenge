@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:lhj/loginPage.dart';
 import 'package:lhj/models/detailModel.dart';
@@ -43,6 +42,13 @@ class MainSys extends StatelessWidget {
             create: (BuildContext context) => new Test4Provider()),
         ChangeNotifierProvider<MainProvider>(
             create: (BuildContext context) => new MainProvider()),
+        // ChangeNotifierProvider<MainProvider>(
+        //     create: (BuildContext context) { MainProvider p = new MainProvider();
+        //     // p.init();
+        //     // Future(p.init);
+        //     // return p;
+        //       return new MainProvider()..init();
+        //     }),
       ],
       child: new MaterialApp(
         // home: new MainPage(),
@@ -52,7 +58,7 @@ class MainSys extends StatelessWidget {
               create: (BuildContext context) => new Test2Provider(),
               // child: new TestPage()
             ),
-            ChangeNotifierProvider<MainProvider>(create: (_) => MainProvider())
+            // ChangeNotifierProvider<MainProvider>(create: (_) => MainProvider())
           ],
           child: LoginCheck(),
         ),

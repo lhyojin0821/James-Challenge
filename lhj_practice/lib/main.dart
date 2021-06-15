@@ -34,6 +34,14 @@ class MainSys extends StatelessWidget {
             create: (BuildContext context) => new Test4Provider()),
         ChangeNotifierProvider<MainProvider>(
             create: (BuildContext context) => new MainProvider()),
+        // ChangeNotifierProvider<MainProvider>(create: (BuildContext context) {
+        //   MainProvider p = new MainProvider();
+        //   // p.init();
+        //   Future(p.init);
+        //   return p;
+        // return new MainProvider()..init();
+        // return new MainProvider();
+        // }),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -43,8 +51,8 @@ class MainSys extends StatelessWidget {
               create: (BuildContext context) => new Test2Provider(),
               // child: new TestPage()
             ),
-            ChangeNotifierProvider<MainProvider>(
-                create: (_) => new MainProvider())
+            // ChangeNotifierProvider<MainProvider>(
+            //     create: (_) => new MainProvider())
           ],
           child: LoginCheck(),
         ),

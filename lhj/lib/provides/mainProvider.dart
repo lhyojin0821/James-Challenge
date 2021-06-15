@@ -14,12 +14,15 @@ class MainProvider with ChangeNotifier {
   //초기화
   //@TODO : 15일, 생성자 함수 외 부분에서 init 함수를 실행 할 수 있는 방법이 있는지
   // -> private 는 지워도 상관없음
+  // 시점 -> 생성자의 시점은 new MainProvider() 이때 실행을 시킴
   MainProvider() {
-    Future(this._init);
+    Future(this.init);
   }
 
-  Future<void> _init() async {
+  Future<void> init() async {
     this.model = await new Connect().connect();
+    await new Connect().airTableConnect();
+    await new Connect().airTableCreate();
     notifyListeners();
     return;
   }

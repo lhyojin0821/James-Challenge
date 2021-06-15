@@ -6,7 +6,7 @@ import 'package:lhj_practice/models/mainConnectModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
 
 class Connect {
-  final String END_POINT = 'http://172.30.1.52:3000';
+  final String END_POINT = 'http://172.30.1.37:3000';
   Future<MainConnectModel> connect() async {
     try {
       String url = "$END_POINT/flutter/data/all";
@@ -45,5 +45,42 @@ class Connect {
     bool check = jsonDecode(res.body);
     print(check);
     return check;
+  }
+
+  Future<void> airTableConnect() async {
+    http.Response res = await http.get(
+        "https://api.airtable.com/v0/app1X6OfXdB6tWJsL/Table%201?maxRecords=3&view=Grid%20view",
+        headers: {"Authorization": "Bearer keyLR7h4aI22IPrVZ"});
+    print(res.body);
+    return;
+  }
+
+  Future<void> airTableCreate() async {
+    http.Response res = await http.post(
+        'https://api.airtable.com/v0/app1X6OfXdB6tWJsL/Table%201',
+        headers: {
+          "Authorization": "Bearer keyLR7h4aI22IPrVZ",
+          "Content-Type": "application/json",
+        },
+        body: '''
+      {
+  "records": [
+    {
+      "fields": {
+        "Name": "test",
+        "Notes": "testtest"
+      }
+    },
+    {
+      "fields": {
+        "Name": "test",
+        "Notes": "testtest"
+      }
+    }
+  ]
+}
+      ''');
+    print(res.body);
+    return;
   }
 }
