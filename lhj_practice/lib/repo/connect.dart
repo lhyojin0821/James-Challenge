@@ -6,7 +6,7 @@ import 'package:lhj_practice/models/mainConnectModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
 
 class Connect {
-  final String END_POINT = 'http://172.30.1.37:3000';
+  final String END_POINT = 'http://172.30.1.9:3000';
   Future<MainConnectModel> connect() async {
     try {
       String url = "$END_POINT/flutter/data/all";

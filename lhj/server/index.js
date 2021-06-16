@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var path = require('path');
+
 app.listen(3000);
 
 app.use(express.json());
@@ -70,4 +72,15 @@ app.post('/flutter/login', (req, res) => {
   }
   return res.json(false);
 
+});
+
+app.get('/oauth', (req, res) => {
+  var { code } = req.query
+  // var code = req.query.code;
+  console.log(code);
+  if (code) {
+    // return res.json(true);
+    return res.sendFile(path.join(__dirname, './views/kakaologin.html'));
+  }
+  return res.json(false);
 });
