@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lhj_practice/kakaoLoginPage.dart';
 import 'package:lhj_practice/main.dart';
+import 'package:lhj_practice/models/mainConnectModel.dart';
 import 'package:lhj_practice/providers/loginCheckProvider.dart';
 import 'package:lhj_practice/repo/connect.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -102,9 +101,9 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _login(BuildContext context) async {
     print('id: ${this.idCt.text}');
     print('id: ${this.pwCt.text}');
-    bool loginCheck =
+    LoginConnectModel loginCheck =
         await connect.loginConnect(id: this.idCt.text, pw: this.pwCt.text);
-    if (!loginCheck) {
+    if (!loginCheck.check) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -115,10 +114,12 @@ class _LoginPageState extends State<LoginPage> {
       );
       return;
     }
-    await this.loginCheckProvider.setCheck(loginCheck);
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-      return MainPage2();
-    }));
+    await this.loginCheckProvider.setCheck(loginCheck.check);
+    if (this.loginCheckProvider == null) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+        return MainPage2();
+      }));
+    }
   }
 }

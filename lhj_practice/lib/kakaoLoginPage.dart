@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lhj_practice/models/mainConnectModel.dart';
 import 'package:lhj_practice/providers/loginCheckProvider.dart';
 import 'package:lhj_practice/repo/connect.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,7 @@ class KakaoLogin extends StatefulWidget {
 
 class _KakaoLoginState extends State<KakaoLogin> {
   Connect connect = new Connect();
-  String kakaoUrl;
+  KakaoLoginConnectModel kakaoUrl;
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _KakaoLoginState extends State<KakaoLogin> {
                 child: Text('진행중....'),
               )
             : WebView(
-                initialUrl: this.kakaoUrl,
+                initialUrl: this.kakaoUrl.result,
                 javascriptMode: JavascriptMode.unrestricted,
                 javascriptChannels: {
                   JavascriptChannel(

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:lhj_practice/models/mainConnectModel.dart';
@@ -37,32 +36,54 @@ class Connect {
     return new MainConnectModel(netCheck: NetChecks.Error, mainModels: []);
   }
 
-  Future<bool> loginConnect({@required String id, @required String pw}) async {
-    http.Response res = await http.post(this.END_POINT + '/flutter/login',
-        headers: {'content-type': 'application/json'},
-        body: json.encode({'id': id, 'pw': pw}));
+  Future<LoginConnectModel> loginConnect(
+      {@required String id, @required String pw}) async {
+    try {
+      http.Response res = await http
+          .post(this.END_POINT + '/flutter/login',
+              headers: {'content-type': 'application/json'},
+              body: json.encode({'id': id, 'pw': pw}))
+          .timeout(Duration(seconds: 8),
+              onTimeout: () async => new http.Response('{}', 404));
+      if (res.statusCode == 404) {
+        return LoginConnectModel(netChecks: NetChecks.TimeOut);
+      }
 
-    bool check = jsonDecode(res.body);
-    print(check);
-    return check;
+      bool check = jsonDecode(res.body);
+      if (check == null) {
+        return LoginConnectModel(netChecks: NetChecks.ServerError);
+      }
+      print(check);
+      return LoginConnectModel(netChecks: NetChecks.Ok, check: check);
+    } catch (e) {}
+    return LoginConnectModel(netChecks: NetChecks.Error);
   }
 
-  Future<void> airTableConnect() async {
-    http.Response res = await http.get(
-        "https://api.airtable.com/v0/app1X6OfXdB6tWJsL/Table%201?maxRecords=3&view=Grid%20view",
-        headers: {"Authorization": "Bearer keyLR7h4aI22IPrVZ"});
-    print(res.body);
-    return;
+  Future<AirTableConnectModel> airTableConnect() async {
+    try {
+      http.Response res = await http.get(
+          "https://api.airtable.com/v0/app1X6OfXdB6tWJsL/Table%201?maxRecords=3&view=Grid%20view",
+          headers: {
+            "Authorization": "Bearer keyLR7h4aI22IPrVZ"
+          }).timeout(Duration(seconds: 8),
+          onTimeout: () async => new http.Response('{}', 404));
+      if (res.statusCode == 404) {
+        return AirTableConnectModel(netChecks: NetChecks.TimeOut);
+      }
+      print(res.body);
+    } catch (e) {}
+    return AirTableConnectModel(netChecks: NetChecks.Error);
   }
 
-  Future<void> airTableCreate() async {
-    http.Response res = await http.post(
-        'https://api.airtable.com/v0/app1X6OfXdB6tWJsL/Table%201',
-        headers: {
-          "Authorization": "Bearer keyLR7h4aI22IPrVZ",
-          "Content-Type": "application/json",
-        },
-        body: '''
+  Future<AirTableCreateConnectModel> airTableCreate() async {
+    try {
+      http.Response res = await http.post(
+          'https://api.airtable.com/v0/app1X6OfXdB6tWJsL/Table%201',
+          headers: {
+            "Authorization": "Bearer keyLR7h4aI22IPrVZ",
+            "Content-Type": "application/json",
+          },
+          body: '''
       {
   "records": [
     {
@@ -79,15 +100,32 @@ class Connect {
     }
   ]
 }
-      ''');
-    print(res.body);
-    return;
+      ''').timeout(Duration(seconds: 8),
+          onTimeout: () async => new http.Response('{}', 404));
+      if (res.statusCode == 404) {
+        return AirTableCreateConnectModel(netChecks: NetChecks.TimeOut);
+      }
+      print(res.body);
+    } catch (e) {}
+    return AirTableCreateConnectModel(netChecks: NetChecks.Error);
   }
 
-  Future<String> kakaoLoginKey() async {
-    http.Response res = await http
-        .post(this.END_POINT + '/kakaokey', headers: {'fkey': 'flutter'});
-    String result = jsonDecode(res.body);
-    return result;
+  Future<KakaoLoginConnectModel> kakaoLoginKey() async {
+    try {
+      http.Response res = await http.post(this.END_POINT + '/kakaokey',
+          headers: {
+            'fkey': 'flutter'
+          }).timeout(Duration(seconds: 8),
+          onTimeout: () async => new http.Response('{}', 404));
+      if (res.statusCode == 404) {
+        return KakaoLoginConnectModel(netChecks: NetChecks.TimeOut);
+      }
+      String result = jsonDecode(res.body);
+      if (result == null) {
+        return KakaoLoginConnectModel(netChecks: NetChecks.ServerError);
+      }
+      return KakaoLoginConnectModel(netChecks: NetChecks.Ok, result: result);
+    } catch (e) {}
+    return KakaoLoginConnectModel(netChecks: NetChecks.Error);
   }
 }
