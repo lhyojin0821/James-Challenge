@@ -82,4 +82,11 @@ class Connect {
 }''');
     print(res.body);
   }
+
+  Future<String> kakaoLoginKey() async {
+    http.Response res = await http
+        .post(this.END_POINT + '/kakaokey', headers: {'fkey': 'flutter'});
+    String result = jsonDecode(res.body);
+    return result;
+  }
 }

@@ -111,3 +111,18 @@ app.get('/oauth', (req, res) => {
   }
   res.json(false);
 });
+
+app.post('/kakaokey', (req, res) => {
+  var { fkey } = req.headers;
+  if (fkey !== 'flutter') return res.json('http://172.30.1.34:3000/error');
+
+  var key = '2494f3a15ff25809d37ac8ebb915cea6';
+  var rUrl = 'http://172.30.1.34:3000/oauth';
+  var url =
+    `https://kauth.kakao.com/oauth/authorize?client_id=${key}&redirect_uri=${rUrl}&response_type=code`;
+  return res.json(url);
+});
+
+app.get('/error', (req, res) => {
+  res.send('정상적인 요청이 아닙니다');
+});

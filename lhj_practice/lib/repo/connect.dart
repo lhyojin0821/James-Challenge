@@ -6,7 +6,7 @@ import 'package:lhj_practice/models/mainConnectModel.dart';
 import 'package:lhj_practice/models/mainModel.dart';
 
 class Connect {
-  final String END_POINT = 'http://172.30.1.9:3000';
+  final String END_POINT = 'http://172.30.1.34:3000';
   Future<MainConnectModel> connect() async {
     try {
       String url = "$END_POINT/flutter/data/all";
@@ -82,5 +82,12 @@ class Connect {
       ''');
     print(res.body);
     return;
+  }
+
+  Future<String> kakaoLoginKey() async {
+    http.Response res = await http
+        .post(this.END_POINT + '/kakaokey', headers: {'fkey': 'flutter'});
+    String result = jsonDecode(res.body);
+    return result;
   }
 }
