@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:lhj/repo/pref.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginCheckProvider with ChangeNotifier {
   bool check;

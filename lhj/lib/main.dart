@@ -1,20 +1,18 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:lhj/loginPage.dart';
-import 'package:lhj/models/detailModel.dart';
+
 import 'package:lhj/models/mainConnectModel.dart';
 import 'package:lhj/models/mainModel.dart';
 import 'package:lhj/pageTwo.dart';
 import 'package:lhj/poviderex/test2Provider.dart';
 import 'package:lhj/poviderex/test4Provider.dart';
-import 'package:lhj/poviderex/testPage.dart';
+
 import 'package:lhj/poviderex/testProvider.dart';
 import 'package:lhj/provides/loginCheckProvider.dart';
 import 'package:lhj/provides/mainProvider.dart';
-import 'package:lhj/repo/connect.dart';
+
 import 'package:provider/provider.dart';
 // http class 로 묶여있지 않아서 as http 사용
-import 'package:http/http.dart' as http;
 
 void main() {
   runApp(new MainSys()); //플러터 실행하는 함수

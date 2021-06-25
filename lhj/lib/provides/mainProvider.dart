@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:lhj/models/mainConnectModel.dart';
-import 'package:lhj/models/mainModel.dart';
 import 'package:lhj/repo/connect.dart';
 
 class MainProvider with ChangeNotifier {

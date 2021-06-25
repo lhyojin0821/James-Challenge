@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lhj/kakaologinPage.dart';
-import 'package:lhj/main.dart';
 import 'package:lhj/provides/loginCheckProvider.dart';
 import 'package:lhj/repo/connect.dart';
 import 'package:provider/provider.dart';
@@ -109,9 +108,9 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
     await this.loginCheckProvider.setCheck(loginCheck);
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-      return MainPage2();
-    }));
+    // Navigator.of(context)
+    //     .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+    //   return MainPage2();
+    // }));
   }
 }
