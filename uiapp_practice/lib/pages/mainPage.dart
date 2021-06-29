@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uiapp_practice/views/home.dart';
+import 'package:uiapp_practice/views/message.dart';
+import 'package:uiapp_practice/views/search.dart';
+import 'package:uiapp_practice/views/settings.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -7,6 +11,19 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int selected = 0;
+  PageController? pageController;
+  @override
+  void initState() {
+    this.pageController = new PageController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    this.pageController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,17 +34,18 @@ class _MainPageState extends State<MainPage> {
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add_alert))],
       ),
       body: PageView(
+        controller: this.pageController,
         children: [
-          Container(
-            color: Colors.red,
-          ),
-          Container(
-            color: Colors.blue,
-          )
+          Home(),
+          Search(),
+          Message(),
+          Settings(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int i) {
+          if (this.pageController == null) return;
+          this.pageController!.jumpToPage(i);
           setState(() {
             this.selected = i;
           });

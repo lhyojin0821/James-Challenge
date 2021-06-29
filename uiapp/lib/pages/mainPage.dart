@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uiapp/pages/views/home.dart';
+import 'package:uiapp/pages/views/message.dart';
+import 'package:uiapp/pages/views/person.dart';
+import 'package:uiapp/pages/views/search.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -7,6 +11,19 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int selected = 0;
+  PageController? pageController;
+
+  @override
+  void initState() {
+    this.pageController = PageController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    this.pageController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +37,18 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
       body: PageView(
+        controller: this.pageController,
         children: [
-          Container(
-            color: Colors.red,
-          ),
-          Container(
-            color: Colors.blue,
-          ),
+          Home(),
+          Search(),
+          Message(),
+          Person(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int i) {
+          if (this.pageController == null) return;
+          this.pageController!.jumpToPage(i);
           setState(() {
             this.selected = i;
           });
